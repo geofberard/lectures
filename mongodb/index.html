@@ -1,0 +1,1219 @@
+<!doctype html>
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>MongoDB</title>
+
+        <meta name="description" content="MongoDB Lecture">
+        <meta name="author" content="Geoffrey Berard">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="../bower_components/reveal.js/css/reveal.css">
+        <link rel="stylesheet" href="../bower_components/reveal.js/css/theme/simple.css" id="theme">
+        <link rel="stylesheet" href="../bower_components/highlightjs/styles/hybrid.css">
+        <link rel="stylesheet" href="css/default.css">
+        <link rel="stylesheet" href="css/print.css" media="print" />
+
+        <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+        <script>
+            if( window.location.search.match( /print-pdf/gi ) ) {
+                var link = document.createElement( 'link' );
+                link.rel = 'stylesheet';
+                link.type = 'text/css';
+                link.href = '../bower_components/reveal.js/css/print/pdf.css';
+                document.getElementsByTagName( 'head' )[0].appendChild( link );
+            }
+        </script>
+
+    </head>
+
+    <body>
+
+        <div class="mongodb reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+
+                <section>
+                      <h1><img src="./images/mongodb_logo.png" alt="MongoDB Logo" class="print-with-background"></h1>
+                    <h2>The Humongous Database</h2>
+                    <p><small>Geoffrey Berard / <a href="http://twitter.com/geofberard">@geofberard</a></small></p>
+                    <p><small><a href="http://goo.gl/lQe0pD">goo.gl/lQe0pD</a></small></p>
+                </section>
+
+                <section>
+                      <h1>Plan</h1>
+                    <ul>
+                        <li>I. MongoDB Presentation
+                            <ul>
+                                <li>Schemaless</li>
+                                <li>BSon</li>
+                                <li>Document Model</li>
+                                <li>Performance</li>
+                            </ul>
+                        </li>
+                        <li>II. MongoDB Architecture
+                            <ul>
+                                <li>Replica Set</li>
+                                <li>Sharding</li>
+                            </ul>
+                        </li>
+                        <li>III. MongoDB CRUD
+                            <ul>
+                                <li>CREATE</li>
+                                <li>READ</li>
+                                <li>UPDATE</li>
+                                <li>DELETE</li>
+                            </ul>
+                        </li>
+                        <li>IV. Software with MongoDB
+                            <ul>
+                                <li>Architecture</li>
+                            </ul>
+                        </li>
+                        <li>V. Practical</li>
+                    </ul>
+                </section>
+
+                <!--     I. MongoDB Presentation    -->
+
+                <section>
+                      <h1><img src="./images/mongodb_logo.png" alt="MongoDB Logo" class="print-with-background"></h1>
+                    <h2>Presentation</h2>
+                </section>
+
+                <section>
+                    <section>
+                        <h1>MongoDb</h1>
+                          <h2>Présentation</h2>
+                        <ul>
+                            <li>Document oriented Data Base</li>
+                            <li>Non relational</li>
+                            <li>Made in C++</li>
+                            <li>Scalable : Auto Sharding</li>
+                            <li>Dynamic : Schemaless</li>
+                            <li>Functionnalities
+                                <ul>
+                                    <li>Text Search</li>
+                                    <li>GeoSearch</li>
+                                    <li>Aggregation</li>
+                                    <li>Map-Reduce</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h1>MongoDb</h1>
+                          <h2>Supported By</h2>
+                        <img src="./images/mongodb_driver.png" alt="Drivers" style="width:500px" class="framed-picture">
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h1>Schemaless</h1>
+                        <h2>JSon</h2>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+{
+    _id : 1,
+    first_name: 'Victor', 
+    surname: 'Hugo', 
+    groups : [ "Writer", "Painter"],
+    address:{
+        number: 6,
+        street_name: 'Place des Vosges', 
+        city: 'Paris', 
+        zip: '75004'
+    }
+}
+                        </code></pre>
+                        <div>Available Data Types : </div> 
+                        <ul>
+                            <li>Array</li>
+                            <li>Object</li>
+                            <li>String</li>
+                            <li>Number</li>
+                            <li>Boolean</li>
+                            <li>Null</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h1>Schemaless</h1>
+                        <h2>Exemple</h2>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+{
+    first_name: 'Hannibal', 
+    surname: 'Smith', 
+}
+
+{
+    first_name: 'Gregory',
+    surname: 'House',
+    title:"Dr",
+}
+
+{
+    first_name: 'Victor', 
+    surname: 'Hugo', 
+    address:{
+        number: 6,
+        street_name: 'Place des Vosges', 
+        city: 'Paris', 
+        zip: '75004'
+    }
+}
+                        </code></pre>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h1>BSON</h1>
+                        <p>Binary Representation of JSON</p>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+{hello: "world"}
+                        </code></pre>
+                        <p>Gives in BSON</p>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+\x16\x00\x00\x00\x02hello\x00
+\x06\x00\x00\x00world\x00\x00
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h1>BSON</h1>
+                        <h2>Enriched Types</h2>
+                           <img src="./images/bson_types.png" alt="MongoDB Logo">
+                    </section>
+                </section>
+
+                <section>
+                    <h1>Position</h1>
+                    <img src="./images/mongodb_position.png" class="print-with-background" alt="MongoDB Logo" style="border-radius: 30px">
+                </section>
+
+                <section>
+                    <section>
+                          <h1>Relational VS Document</h1>
+                          <h2>Models Differences</h2>
+                        <img src="./images/comparaison_rvsd.png" alt="relational_vs_document">
+                    </section>
+
+                    <section>
+                          <h1>Relational VS Document</h1>
+                          <h2>Relational Model</h2>
+                        <img src="./images/comparaison_relational.png" alt="Relational Model" style="height:550px">
+                    </section>
+
+                    <section>
+                          <h1>Relational VS Document</h1>
+                          <h2>MongoDB Model</h2>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+{ 
+  first_name: ‘Paul’,
+  surname: ‘Mc Cartney’,
+  city: ‘London’,
+  location: [45.123,47.232],
+  cars: [ 
+    { model: ‘Bentley’,
+      year: 1973,
+      value: 100000, … },
+    { model: ‘Rolls Royce’,
+      year: 1965,
+      value: 330000, … }
+  }
+}
+                    </code></pre>
+                    </section>
+
+                    <section>
+                          <h1>Relational VS Document</h1>
+                          <h2>Terminology</h2>
+                        <img src="./images/comparaison_terminology.png" alt="Terminology" style="width:75%">
+                    </section>
+                </section>
+                
+                <section>
+                    <h1>Performances</h1>
+                    <div class="framed-picture">
+                        <img src="./images/perf_locality.png" alt="Locality"><br/>
+                        Locality
+                    </div>
+                    <div class="framed-picture">
+                        <img src="./images/perf_caching.png" alt="Caching"><br/>
+                        Caching
+                    </div>
+                    <div class="framed-picture">
+                        <img src="./images/perf_update.png" alt="Update"><br/>
+                        Inline Update
+                    </div>
+                </section>
+
+                <section>
+                    <h1>Document Model</h1>
+                    <h2>Benefits</h2>
+                    <ul>
+                        <li>Efficient
+                            <ul>
+                                <li>Super low latency</li>
+                                <li>Scale Easily</li>
+                            </ul>
+                        </li>
+                        <li>Agility and flexibility
+                            <ul>
+                                <li>Data models can evolve easily</li>
+                                <li>Companies can adapt to changes quickly</li>
+                            </ul>
+                        </li>
+                        <li>Intuitive, natural data representation
+                            <ul>
+                                <li>Developers are more productive</li>
+                                <li>Many types of applications are a good fit</li>
+                            </ul>
+                        </li>
+                        <li>Reduces the need for joins, disk seeks
+                            <ul>
+                                <li>Programming is more simple</li>
+                                <li>Performance can be delivered at scale</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </section>
+
+                <!--     II. MongoDB Architecture    -->
+
+                <section>
+                    <h1><img src="./images/mongodb_logo.png" alt="MongoDB Logo" class="print-with-background"></h1>
+                    <h2>Architecture</h2>
+                </section>
+
+                <section>
+                    <section>
+                        <h1>Replica Set</h1>
+                        <h2>Presentation</h2>
+                        <div>
+                            <img src="./images/rs_presentation.png" alt="Replica Set" class="image-left">
+                            <div class="element-right">
+                                <ul>
+                                    <li>Two copies or more</li>
+                                    <li>Master / Slave</li>
+                                    <li>Automatic Failover</li>
+                                    <li>Purpose :
+                                        <ul>
+                                            <li>High Availability</li>
+                                            <li>Data Recovery</li>
+                                            <li>Maintenance</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section>
+                        <h1>Replica Set</h1>
+                        <h2>Architecture</h2>
+                        <img src="./images/rs_architecture.png" class="print-with-background"  alt="Replica Set">
+                    </section>
+
+                    <section>
+                        <h1>Replica Set</h1>
+                        <h2>Organisation</h2>
+                        <img src="./images/rs_organisation.png" class="print-with-background"  alt="Replica Set">
+                    </section>
+
+                    <section>
+                        <h1>Replica Set</h1>
+                        <h2>Failover</h2>
+                        <img src="./images/rs_failover.png" class="print-with-background"  alt="Replica Set">
+                    </section>
+                </section>
+
+                <section>
+                    <h1>Scalability</h1>
+                    <div class="framed-picture">
+                        <img src="./images/scalability.png" alt="Replica Set">
+                    </div>
+                </section>
+
+                <section>
+                    <section>
+                        <h1>Sharding</h1>
+                        <h2>Architecture</h2>
+                        <img src="./images/sharding_architecture.png" class="print-with-background" alt="Architecture">
+                    </section>
+
+                    <section>
+                        <h1>Sharding</h1>
+                        <h2>Shard : Cluster Node</h2>
+                        <img src="./images/sharding_presentation.png" alt="Chunk" style="height: 450px">
+                    </section>
+
+                    <section>
+                        <h1>Sharding</h1>
+                        <h2>Config Server</h2>
+                        <p>Contains cluster metadatas<p>
+                        <ul>
+                            <li>1 instance in dev, 3 in production</li>
+                            <li>Contains intervals definitions (chunks)</li>
+                            <li>Maintenance</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h1>Sharding</h1>
+                        <h2>Mongos : Query Router</h2>
+                        <ul>
+                            <li>Behaves identically to mongod</li>
+                            <li>Query router</li>
+                            <li>Load Balancer</li>
+                            <li>Dedicated or shared</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h1>Sharding</h1>
+                        <h2>Sharding Key</h2>
+                        <p>Requirement :</p>
+                        <ul>
+                            <li>Immutablility (key/value)</li>
+                            <li>Big cardinality</li>
+                            <li>Distributed</li>
+                            <li>Should be indexed</li>
+                            <li>Limited to 512 octets</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h1>Sharding</h1>
+                        <h2>Chunk</h2>
+                        <ul>
+                            <li>Split if bigger than 64Mo</li>
+                            <li>Split &ne; Moved</li>
+                            <li>Split only between 2 différent values</li>
+                            <li>Moved Automatically</li>
+                        </ul>
+                           <img src="./images/sharding_chunk.png" class="print-with-background" alt="Chunks" style="height: 250px">
+                    </section>
+
+                    <section>
+                        <h1>Sharding</h1>
+                        <h2>Balancing</h2>
+                        <img src="./images/sharding_balancing.png" class="print-with-background" alt="Chunks" style="height: 250px">
+                    </section>
+                </section>
+
+                <!--     III. MongoDB CRUD    -->
+
+                <section>
+                    <h1><img src="./images/mongodb_logo.png" alt="MongoDB Logo" class="print-with-background"></h1>
+                    <h2>CRUD</h2>
+                </section>
+
+                <section>
+                    <section>
+                        <h1>CREATE</h1>
+                        <h2>insert</h2>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+> db.member.insert({new_document})
+                        </code></pre>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+WriteResult({ "nInserted" : 1 })
+                        </code></pre>
+                        <p>Create the collection if necessary</p>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+> db.member.insert({first_name: "John", last_name: "Doe"})
+> db.member.insert({first_name: "Jean", last_name: "Dupont", city_of_birth: "Paris"})
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h1>CREATE</h1>
+                        <h2>INDEX</h2>
+                        <p>Syntax (<a href="http://docs.mongodb.org/manual/core/index-types/index.html">Index types</a>)</p>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+createIndex( { userid: index_type } )
+                        </code></pre>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+> db.records.createIndex( { userid: 1 } )   // Ascending index
+> db.records.createIndex( { userid: -1 } )   // Descending index
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h1>CREATE</h1>
+                        <h2>mongoimport</h2>
+                        <p>Supported file format</p>
+                        <ul>
+                            <li>JSon</li>
+                            <li>CSV</li>
+                            <li>TSV</li>
+                        </ul>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+$ ./mongoimport --db test --collection zips --file ../../../Downloads/zips.json
+                        </code></pre>
+                        <a href="./data-set/zips.json">Download zips.json</a>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h1>READ</h1>
+                        <h2>Find</h2>
+                        <p>Returning all elements of a collection:</p>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+> db.member.find()
+                        </code></pre>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+{ "_id" : ObjectId("54853dd6dd8fc0fec931fcbc"), "first_name" : "John", "last_name" : "Doe" }
+                        </code></pre>
+                        <p>Formating the result:</p>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+> db.member.find().pretty()
+                        </code></pre>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+{
+    "_id" : ObjectId("54853dd6dd8fc0fec931fcbc"),
+    "first_name" : "John",
+    "last_name" : "Doe"
+}
+                        </code></pre>
+                        <p>Returning only the first element:</p>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+> db.member.findOne()
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h1>READ</h1>
+                        <h2>Find</h2>
+                        <p>Syntax :</p>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+find({query},{keys_filter})
+                        </code></pre>
+                        <p>Example</p>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+> db.zips.find({state:"NY"},{city:true, _id:false})    
+                        </code></pre>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+{ "_id" : "06390", "city" : "FISHERS ISLAND" }
+{ "_id" : "10001", "city" : "NEW YORK" }
+{ "_id" : "10002", "city" : "NEW YORK" }
+{ "_id" : "10003", "city" : "NEW YORK" }
+{ "_id" : "10004", "city" : "GOVERNORS ISLAND" }
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h1>READ</h1>
+                        <h2>Querying :</h2>
+                        <ul>
+                            <li>Greater than ($gt, $gte)</li>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+{ pop : {$gt : 100000} }
+                        </code></pre>
+                            <li>Lower than ($lt, $lte)</li>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+{ pop : {$lte : 100} }
+                        </code></pre>
+                            <li>Value Exists ($exists)</li>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+{ city : {$exists : true} }
+                        </code></pre>
+                            <li>Value Type ($type) (<a href="http://docs.mongodb.org/manual/reference/bson-types/index.html">Type codes</a>)</li>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+{ city : {$type : type_code} }
+                        </code></pre>
+                            <li>Regular Expression ($regex)</li>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+{ city : {$regex : "^A"} }
+                        </code></pre>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h1>READ</h1>
+                        <h2>Querying in array</h2>
+                        <ul>
+                            <li>Natural</li>
+                            <pre><code data-trim contenteditable class="json mongo-capture">
+{ groups : "Painter" }
+                            </code></pre>
+                            <li>In ($in)</li>
+                            <pre><code data-trim contenteditable class="json mongo-capture">
+{ groups : { $in : ["Writer", "Sculptor", "Dancer"]}}
+                            </code></pre>
+                            <li>All ($all)</li>
+                            <pre><code data-trim contenteditable class="json mongo-capture">
+{ groups : { $all : ["Painter", "Writer"]}}
+                            </code></pre>
+                        </ul>
+                        <p>Can return :</p>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+{
+    first_name: 'Victor', 
+    surname: 'Hugo', 
+    groups : [ "Writer", "Painter"]
+}
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h1>READ</h1>
+                        <h2>Querying in nested document</h2>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+{ address : { 
+    number: 6,
+    street_name: 'Place des Vosges', 
+    city: 'Paris', 
+    zip: '75004' 
+}})
+                        </code></pre>
+                        <p>Or</p>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+{ "address.city" : "Paris" }
+                        </code></pre>
+                        </code></pre>
+                        <p>Can return :</p>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+{
+    first_name: 'Victor', 
+    surname: 'Hugo', 
+    address:{
+        number: 6,
+        street_name: 'Place des Vosges', 
+        city: 'Paris', 
+        zip: '75004'
+    }
+}
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h1>READ</h1>
+                        <h2>Wrong queries</h2>
+                        <ul>
+                            <li>Incomplete object description</li>
+                            <pre><code data-trim contenteditable class="json mongo-capture">
+{ address : { city : "Paris" }})
+                            </code></pre>
+                            <li>Document key in the wrong order</li>
+                              <pre><code data-trim contenteditable class="json mongo-capture">
+{ address : { 
+    street_name: 'Place des Vosges', 
+    number: 6,
+    city: 'Paris', 
+    zip: '75004' 
+}})
+                            </code></pre>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h1>READ</h1>
+                        <h2>Querying combinaison :</h2>
+                        <ul>
+                            <li>Natural : </li>
+                            <pre><code data-trim contenteditable class="json mongo-capture">
+{ pop : {$gt : 100000, $lt : 2000000} }
+                            </code></pre>
+                            <li>Or ($or) : </li>
+                              <pre><code data-trim contenteditable class="json mongo-capture">
+{ $or : [{state : "NY"} , {state : "NJ"}]}
+                            </code></pre>
+                            <li>And ($and) : </li>
+                            <pre><code data-trim contenteditable class="json mongo-capture">
+{ $and : [ {state : "NY"} , {pop : {$gt : 50000} } ] }
+                            </code></pre>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h1>READ</h1>
+                        <h2>Querying combinaison combinaison ???</h2>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+{$and:[{$and:[{city:{regex:"^N"}},{$or:[{state:"NY"},{state:"NJ"}]}]},
+{pop:{$gt:100000,$lt:150000}}]}
+                        </code></pre>
+                        <pre class="fragment" data-fragment-index="1"><code data-trim contenteditable class="json mongo-capture">
+{
+    $and:[
+        { $and:[
+                { city : {regex:"^N"} },
+                { $or : [ 
+                    {state:"NY"}, 
+                    {state:"NJ"} 
+                ]}
+        ]},
+        { pop : { $gt : 100000 , $lt : 150000 } }
+    ]
+}
+                        </code></pre>
+                        <p class="fragment" data-fragment-index="2" style="font-size:20px">Cities <span style="color:#5ca831">starting with "N"</span> in <span style="color:#5ca831">New York or New Jersey</span> with a <span style="color:#5ca831">population between 100k and 150k inhabitants</span></p>
+                    </section>
+                </section>
+
+                <section>
+                    <h1>READ</h1>
+                    <h2>Count</h2>
+                    <pre><code data-trim contenteditable class="json mongo-capture">
+> db.zips.count({state:"NY"})
+                    </code></pre>
+                </section>
+
+                <section>
+                    <section>
+                        <h1>READ</h1>
+                        <h2>Cursor</h2>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+> cursor = db.zips.find({state:"MA"},{city:true, _id:false});  
+                        </code></pre>
+                        <p>Iterating over results :</p>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+> cursor.hasNext()          //        > true
+> cursor.next()             //        > "AGAWAM"
+> cursor.next()             //        > "CUSHMAN"
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h1>READ</h1>
+                        <h2>Operation on curser:</h2>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+> cusror.sort({city : -1})           //      Sort in reverse alphabetical order     
+> cursor.limit(5)                    //      Limit the nomber of results to 5
+> cusror.skip(3)                     //      Skip 3 elements besore returning the result    
+                        </code></pre>
+                        <p>They can be combined</p>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+> cusror.sort({city : -1}).limit(5).skip(3)   
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h1>READ</h1>
+                        <h2>Execution detail :</h2>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+> cur = db.zips.find({state:"MA"},{city:true, _id:false}).sort({city : -1}).limit(5)
+> cur.explain()
+                        </code></pre>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+{
+    ...
+    "cursor" : "QueryOptimizerCursor",
+    "n" : 5,
+    "nscannedObjects" : 29353,
+    "nscanned" : 29353,
+    "nscannedObjectsAllPlans" : 29353,
+    "nscannedAllPlans" : 29353,
+    "scanAndOrder" : false,
+    "nYields" : 229,
+    "nChunkSkips" : 0,
+    "millis" : 22,
+    "server" : "127.0.0.1:27017",
+    "filterSet" : false
+    ...
+} 
+                        </code></pre>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h1>UPDATE</h1>
+                        <h2>Syntax</h2>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+update( {find_query} , {update_query} )
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h1>UPDATE</h1>
+                        <h2>Example</h2>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+update({surname : "Hugo"}, 
+        {surname : "Hugo", groups : [ "Writer", "Painter"]})
+                        </code></pre>
+                        <p>on</p>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+{
+    first_name: 'Victor', 
+    surname: 'Hugo', 
+    address:{
+        number: 6,
+        street_name: 'Place des Vosges', 
+        city: 'Paris', 
+        zip: '75004'
+    }
+}                            
+                        </code></pre>
+                        <p>will give</p>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+{
+    surname: 'Hugo', 
+    groups : [ "Writer", "Painter"]
+}                            
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h1>UPDATE</h1>
+                        <ul>
+                            <li>Ajouter/Modifier des champs ($set)</li>
+                            <pre><code data-trim contenteditable class="json mongo-capture">
+{$set : {groups : [ "Writer", "Painter"]}}
+                            </code></pre>
+                            <pre><code data-trim contenteditable class="json mongo-capture">
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+                            </code></pre>
+                            <li>Supprimer des champs ($unset)</li>
+                            <pre><code data-trim contenteditable class="json mongo-capture">
+{$unset : {groups : 1}}
+                            </code></pre>
+                            <pre><code data-trim contenteditable class="json mongo-capture">
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+                            </code></pre>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h1>UPDATE</h1>
+                        <h2>Array manipulation</h2>
+                        <ul>
+                            <li>Change Value</li>
+                            <pre><code data-trim contenteditable class="json mongo-capture">
+{"groups.2" : "Poet"}
+                            </code></pre>
+                            <li>Add element ($push)</li>
+                              <pre><code data-trim contenteditable class="json mongo-capture">
+{$push : {groups : "Poet"}}
+{$pushAll : {groups : ["Poet","Politician"]}}
+                            </code></pre>
+                            <li>Remove element ($pop)</li>
+                            <pre><code data-trim contenteditable class="json mongo-capture">
+{$pop : {groups : 1}}   // remove last element
+{$pop : {groups : -1}}  // remove first element
+                            </code></pre>
+                        </ul>
+                    </section>
+                    
+                    <section>
+                        <h1>UPDATE</h1>
+                        <h2>Array manipulation</h2>
+                        <ul>
+                            <li>Remove specific element ($pull)</li>
+                            <pre><code data-trim contenteditable class="json mongo-capture">
+{$pull : {groups : "Poet"}}
+{$pullAll : {groups : ["Poet","Politician"]}}
+                            </code></pre>
+                            <li>Take array as a set ($addToSet)</li>
+                            <pre><code data-trim contenteditable class="json mongo-capture">
+{$addToSet : {groups : "Poet"}}  //  Add "Poet"
+{$addToSet : {groups : "Poet"}}  //  Do nothing because exists
+                            </code></pre>
+                        </ul>
+                    </section>
+                    
+                    <section>
+                        <h1>UPDATE</h1>
+                        <h2>Update or insert</h2>
+                        <p>=> Upsert</p>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+{ upsert : true }     // As update third parameter
+                        </code></pre>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+> db.member.update({surname : "Washington"}, 
+            { $set : {groups : [ "Writer", "Painter"]}}, 
+            { upsert : true })
+                        </code></pre>
+                    </section>
+                    
+                    <section>
+                        <h1>UPDATE</h1>
+                        <h2>Multiple update</h2>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+{ multi : true }     // As update third parameter
+                        </code></pre>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+> db.member.update({}, 
+            { $set : {title : "Mr"}}, 
+            { multi : true })
+                        </code></pre>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+WriteResult({ "nMatched" : 5, "nUpserted" : 0, "nModified" : 5 })
+                        </code></pre>
+                    </section>
+                </section>
+
+                <section>
+                    <h1>DELETE</h1>
+                    <h2>Syntax</h2>
+                    <ul>
+                        <li>Removing lines </li>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+> db.member.remove({find_query})
+                        </code></pre>
+                        <li>Drop a collection</li>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+> db.member.drop()
+                        </code></pre>
+                    </ul>
+                </section>
+
+                <section>
+                    <h1>DEBUGGING</h1>
+                    <h2>Result of the last operation</h2>
+                    <pre><code data-trim contenteditable class="json mongo-capture">
+> db.runCommand({getLastError:1})
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h1>ADVANCED</h1>
+                    <h2>Geospacial (<a href="http://docs.mongodb.org/manual/reference/operator/query-geospatial/index.html">details</a>)</h2>
+                    <pre><code data-trim contenteditable class="json mongo-capture">
+> db.zips.createIndex( { loc : "2d" } )
+> db.zips.find( { 'loc': {$near : [ -112.416728, 37.781334 ] } } ).limit(5)
+                    </code></pre>
+                    <pre><code data-trim contenteditable class="json mongo-capture">
+{ "_id" : "84759", "city" : "PANGUITCH", "loc" : [ -112.436886, 37.80777 ], "pop" : 1797, "state" : "UT" }
+{ "_id" : "84710", "city" : "ALTON", "loc" : [ -112.548389, 37.469905 ], "pop" : 159, "state" : "UT" }
+{ "_id" : "84760", "city" : "PARAGONAH", "loc" : [ -112.773972, 37.89172 ], "pop" : 334, "state" : "UT" }
+{ "_id" : "84717", "city" : "BRYCE CANYON", "loc" : [ -112.074311, 37.608427 ], "pop" : 958, "state" : "UT" }
+{ "_id" : "84761", "city" : "PAROWAN", "loc" : [ -112.832251, 37.844861 ], "pop" : 1988, "state" : "UT" }
+                    </code></pre>
+                </section>
+
+                <!--     IV. Software with MongoDB    -->
+
+                <section>
+                    <h1><img src="./images/mongodb_logo.png" alt="MongoDB Logo" class="print-with-background"></h1>
+                    <h2>Case Study</h2>
+                </section>
+
+                <section>
+                    <section>
+                        <h1>Simple Blog</h1>
+                        <h2>Relational</h2>
+                        <img src="./images/cs_relational.png" alt="Relational Model" class="print-with-background">
+                    </section>
+
+                    <section>
+                        <h1>Simple Blog</h1>
+                        <h2>MogoDB</h2>
+                        <p>Posts</p>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+{
+    _id : ObjectId("54853dd6dd8fc0fec931fcbc"),
+    title : "Title",
+    body : "..."
+    author : "Author",
+    date : "Date",
+    comments : [
+        {
+            name: "Observer",
+            comment: "Comment",
+        }
+    ],
+    tags: ["Course","MongoDB"]
+}
+                        </code></pre>
+                        <p>Author</p>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+{
+    _id : "UserName",
+    email : "UserEmail"
+}
+                        </code></pre>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h1>Socialite</h1>
+                        <h2>Architecture</h2>
+                        <img src="./images/cs_architecture.png" alt="Socialite" class="framed-picture" style="height:450px">
+                    </section>
+
+                    <section>
+                        <h1>Socialite</h1>
+                        <h2>Design 1</h2>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+...
+{ _id : "vHugo", email : "victor.hugo@gmail.com", follower:["gWashington"]}
+{ _id : "gWashington", email : "george.washington@gmail.com"}
+...
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h1>Socialite</h1>
+                        <h2>Design 1 - Problem</h2>
+                        <img src="./images/cs_twitter.png" alt="Twitter" style="height:500px">
+                    </section>
+
+                    <section>
+                        <h1>Socialite</h1>
+                        <h2>Design 2</h2>
+                        <ul>
+                            <li>User Collection</li>
+                            <pre><code data-trim contenteditable class="json mongo-capture">
+{ _id : "vHugo", email : "victor.hugo@gmail.com"}
+{ _id : "gWashington", email : "george.washington@gmail.com"}
+                            </code></pre>
+                            <li>Follower Collection</li>
+                            <pre><code data-trim contenteditable class="json mongo-capture">
+{ _id : 1, _from : "gWashington", _to : "vHugo"}
+                            </code></pre>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h1>Socialite</h1>
+                        <h2>Design 3</h2>
+                        <ul>
+                            <li>User Collection</li>
+                            <pre><code data-trim contenteditable class="json mongo-capture">
+{ _id : "vHugo", email : "victor.hugo@gmail.com"}
+{ _id : "gWashington", email : "george.washington@gmail.com"}
+                            </code></pre>
+                            <li>Follower Collection</li>
+                            <pre><code data-trim contenteditable class="json mongo-capture">
+{ _id : 1, _from : "gWashington", _to : "vHugo"}
+                            </code></pre>
+                            <li>Following Collection</li>
+                            <pre><code data-trim contenteditable class="json mongo-capture">
+{ _id : 1, _from : "vHugo", _to : "gWashington"}
+                            </code></pre>
+                        </ul>
+                    </section>
+                </section>
+
+                <!--     V. Practical    -->
+
+                <section>
+                    <h1><img src="./images/mongodb_logo.png" alt="MongoDB Logo" class="print-with-background"></h1>
+                    <h2>Practical</h2>
+                </section>
+
+                <section>
+                    <section>
+                        <h1>Mongo Shell</h1>
+                        <h2>Phase 1.1</h2>
+                        <ul style="font-size:18px">
+                            <li>Import the <a href="./data-set/enron.json">enron.json</a> in the collection "emails" <span style="color:#5ca831">[Shell command]</span></li>
+                            <li>What is the total amount of emails ? <span style="color:#5ca831">[Query + Result]</span></li>
+                            <li>What is the amount of emails sent from domain enron.com ? <span style="color:#5ca831">[Query + Result]</span></li>
+                            <li>List the reply emails (starting with "Re:") <span style="color:#5ca831">[Query]</span></li>
+                            <li>How long took the last request <span style="color:#5ca831">[Request + Time]</span></li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h1>Mongo Shell</h1>
+                        <h2>Phase 1.2</h2>
+                        <ul style="font-size:18px">
+                            <li>Index the right field and compute the request again <span style="color:#5ca831">[Index Query + Time]</span></li>
+                            <li>Find dates, sender and subject of all messages sent to rob.bradley@enron.com <span style="color:#5ca831">[Query]</span></li>
+                            <li>Remove lizard_ar@yahoo.com from all the email recipient <span style="color:#5ca831">[Query]</span></li>
+                            <li>Add rob.bradley@enron.com as recipient to all emails sent by rosalee.fleming@enron.com <span style="color:#5ca831">[Query]</span></li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h1>Mongo Shell</h1>
+                        <h2>Phase 2</h2>
+                        <ul style="font-size:18px">
+                            <li>List the 10 most populated cities in California and Louisiana <span style="color:#5ca831">[Query]</span></li>
+                            <li>Then most populated cities in California and Louisiana ranked 10 to 20 <span style="color:#5ca831">[Query]</span></li>
+                            <li>Add a field country with the value USA to all the documents <span style="color:#5ca831">[Query]</span></li>
+                            <li>List names of all cities with more than 100 000 inhabitant located on the west side of meridian -110, sorted by population. <span style="color:#5ca831">[Query]</span></li>
+                            <li>The city near New York with the biggest population <span style="color:#5ca831">[Query + Answer]</span></li>
+                        </ul>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h1 class="mongonotes">MongoNotes</h1>
+                        <h2>MongoDB with JAVA</h2>
+                        <img src="./images/notes_capture.png" alt="Techno" style="border-radius:20px;" >
+                    </section>
+
+                    <section>
+                        <h1 class="mongonotes">MongoNotes</h1>
+                        <h2>Project</h2>
+                        <p><small>Github : <a href="http://goo.gl/xszvRW">goo.gl/xszvRW</a></small></p>
+                        <img src="./images/notes_techno.png" alt="Project" class="framed-picture" >
+                    </section>
+
+                    <section>
+                        <h1 class="mongonotes">MongoNotes</h1>
+                        <h2>Bootstrap</h2>
+                        <p>Startup project</p>
+                            <pre><code data-trim contenteditable class="json mongo-capture">
+$ git clone https://github.com/geofberard/MongoNotes.git
+$ cd MongoNotes
+$ mvn clean install
+$ git checkout step-0
+                            </code></pre>
+                    </section>
+
+                    <section>
+                        <h1 class="mongonotes">MongoNotes</h1>
+                        <h2>Git Detail</h2>
+                        <p>Each step of the practical is saved in a special branch.</p>
+                        <p>If you are stuck, you can checkout the next branch to go to the next step with :</p>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+$ git reset HEAD --hard 
+$ git checkout branch_name
+                        </code></pre>  
+                        <p>(all your current modification will be lost)</p>
+                        <p>The branches are :</p>
+                        <ul style="font-size:18px">
+                            <li>Step-0 : Empty implementation</li>
+                            <li>Step-1 : Service bootstrap + find() implementation</li>
+                            <li>Step-2 : findAll() implementation</li>
+                            <li>Step-3 : create() implementation</li>
+                            <li>Step-4 : delete() implementation</li>
+                            <li>Step-final : full implementation</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h1 class="mongonotes">MongoNotes</h1>
+                        <h2>Step 0</h2>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+$ git checkout step-0
+                        </code></pre>   
+                        <ul style="font-size:18px">
+                            <li>NoteService.java : The file you need to work in</li>
+                            <li>Note.java : Modelisation for a note:</li>
+                        <pre><code data-trim contenteditable class="java mongo-capture">
+String id;          //String extracted from MongoDB ObjectID
+String title; 
+String text;
+String type;        //Can be description/room/today/theaters
+boolean important;  //Say if the document is flagger or not
+                        </code></pre>
+                            <li>NotesServer.java : Web Server, run the with main() to start server</li>
+                            <li>JSonTransformet.java : format data to/from client</li>
+                            <li>Resources : web content</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h1 class="mongonotes">MongoNotes</h1>
+                        <h2>Step 1</h2>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+$ git checkout step-1
+                        </code></pre>  
+                        <p style="margin-bottom:30px;">You need to get all the notes from the collection</p> 
+                        <p class="fragment" data-fragment-index="1">There are some hints : </p> 
+                        <ul style="font-size:18px" class="fragment" data-fragment-index="1">
+                            <li>Use find() of DBCollection to get a cursor</li>
+                            <li>Use hasNext() and next() to iterate through elements</li>
+                            <li>Cast DBObject to BasicDBObject to get more methods</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h1 class="mongonotes">MongoNotes</h1>
+                        <h2>Step 2</h2>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+$ git checkout step-2
+                        </code></pre>  
+                        <p style="margin-bottom:30px;">You need to add a new document in the collection</p> 
+                        <p class="fragment" data-fragment-index="1">There are some hints : </p> 
+                        <ul style="font-size:18px" class="fragment" data-fragment-index="1">
+                            <li>Use use insert() of DBCollection</li>
+                            <li>Use new Gson().fromJson(body, Note.class) to get a note object</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h1 class="mongonotes">MongoNotes</h1>
+                        <h2>Step 3</h2>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+$ git checkout step-3
+                        </code></pre>  
+                        <p style="margin-bottom:30px;">You need to delete a document from the collection</p> 
+                        <p class="fragment" data-fragment-index="1">There are some hints : </p> 
+                        <ul style="font-size:18px" class="fragment" data-fragment-index="1">
+                            <li>You must specify a query on _id : {_id:...}</li>
+                            <li>Use use delete() of DBCollection</li>
+                            <li>You can create a query with BasicDBObject or with QueryBuilder</li>
+                            <li>You need to transform the String id to an ObjectId (new ObjectId(uid))</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h1 class="mongonotes">MongoNotes</h1>
+                        <h2>Step 4</h2>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+$ git checkout step-4
+                        </code></pre>  
+                        <p style="margin-bottom:30px;">You need to update document in the collection</p> 
+                        <p class="fragment" data-fragment-index="1">There are some hints : </p> 
+                        <ul style="font-size:18px" class="fragment" data-fragment-index="1">
+                            <li>You must specify a query on _id : {_id:...}</li>
+                            <li>You must specify a modifier on _id : {$set:...}</li>
+                            <li>Use use update() of DBCollection</li>
+                            <li>You can create a query with BasicDBObject or with QueryBuilder</li>
+                            <li>You need to transform the String id to an ObjectId (new ObjectId(uid))</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h1 class="mongonotes">MongoNotes</h1>
+                        <h2>Step Final</h2>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+$ git checkout step-final
+                        </code></pre>  
+                        <p style="margin-bottom:30px;">You can add a new feature</p> 
+                    </section>
+                </section>
+
+                <!--     Bibliography    -->
+
+                <section>
+                    <h1>Bibliography</h1>
+                    <a href="http://docs.mongodb.org/manual/index.html">MongoDB Manual</a><br/>
+                    <a href="https://university.mongodb.com/index.html">MongoDB University</a><br/>
+                    <a href="http://www.json.org/">JSon Specification</a><br/>
+                    <a href="http://bsonspec.org/spec.html">BSon Specification</a><br/>
+                    <a href="https://github.com/10gen-labs/socialite">Socialite</a><br/>
+                </section>
+
+            </div>
+
+        </div>
+
+        <script src="../bower_components/reveal.js/js/reveal.js"></script>
+        <script src="../bower_components/highlightjs/highlight.pack.js"></script>
+        <script>
+            hljs.initHighlightingOnLoad();
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                history: true,
+                center: true,
+                slideNumber: true,
+                maxScale: 1,
+                minScale: 1,
+                theme: Reveal.getQueryHash().theme,
+                transition: Reveal.getQueryHash().transition || 'default',
+            });
+        </script>
+
+    </body>
+</html>

@@ -1,0 +1,146 @@
+@import url(../../bower_components/reveal.js/lib/font/league-gothic/league-gothic.css);
+@import url(https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic);
+
+/*********************************************
+ * GLOBAL STYLES
+ *********************************************/
+body {
+  background: #4b321f;
+  background: -moz-radial-gradient(center, circle cover, #5b3d29 0%, #4b321f 100%);
+  background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, #5b3d29), color-stop(100%, #4b321f));
+  background: -webkit-radial-gradient(center, circle cover, #5b3d29 0%, #4b321f 100%);
+  background: -o-radial-gradient(center, circle cover, #5b3d29 0%, #4b321f 100%);
+  background: -ms-radial-gradient(center, circle cover, #5b3d29 0%, #4b321f 100%);
+  background: radial-gradient(center, circle cover, #5b3d29 0%, #4b321f 100%);
+  background-color: #2b2b2b; }
+
+.reveal {
+  font-family: 'Lato', sans-serif;
+  font-size: 28px;
+  font-weight: normal;
+  color: #eeeeee;
+}
+
+/*********************************************
+ * HEADERS
+ *********************************************/
+.reveal h1,
+.reveal h2,
+.reveal h3,
+.reveal h4,
+.reveal h5,
+.reveal h6 {
+  font-family: 'League Gothic', Impact, sans-serif;
+  margin: 0 0 20px 0;
+  color: #eeeeee;
+  line-height: 0.9em;
+  letter-spacing: 0.02em;
+  text-transform: none;
+}
+
+.mongodb.reveal a{
+  color: #5ca831;
+}
+
+.reveal h1{
+  text-transform: uppercase;
+  text-shadow: 0px 0px 20px rgba(0, 0, 0, 0.4);
+}
+
+.mongodb.reveal section img {
+  margin: 0;
+  border: none;
+  background: none;
+  box-shadow: none;
+}
+
+.reveal .image-left{
+  display: inline-block;
+  vertical-align: middle;
+  width: 40%;
+}
+
+.reveal .element-right{
+  display: inline-block;
+  width: 35%;
+}
+
+.reveal .framed-picture{
+  margin: 5px; 
+  padding: 10px;
+  border-radius: 30px; 
+  background: rgba(255, 255, 255, 1);
+  display: inline-block;
+  vertical-align: middle;
+  color: #4b321f;
+}
+
+.reveal .mongo-capture {
+  font-size: 18px;
+  line-height: 20px;
+}
+
+.reveal ul pre {
+  width: 710px;
+}
+
+.reveal pre {
+  margin: 10px auto;
+}
+
+.mongodb.reveal section img.framed-picture {
+  margin: 5px;
+  padding: 10px;
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 1);
+  display: inline-block;
+  vertical-align: middle;
+  color: #4b321f;
+}
+
+.reveal .framed-picture img{
+  height: 450px;
+}
+
+.reveal .mongo-capture {
+  font-size: 18px;
+  line-height: 20px;
+}
+
+h1.mongonotes {
+  text-transform: none;
+  font-family: 'RobotoDraft', sans-serif;
+  font-size: 70px;
+}
+
+.mongodb.reveal .controls div.navigate-left, .reveal .controls div.navigate-left.enabled,
+.mongodb.reveal .controls div.navigate-left.enabled:hover {
+  border-right-color: #5fa832;
+}
+
+.mongodb.reveal .controls div.navigate-right, .reveal .controls div.navigate-right.enabled,
+.mongodb.reveal .controls div.navigate-right.enabled:hover {
+  border-left-color: #5fa832;
+}
+
+.mongodb.reveal .controls div.navigate-up, .reveal .controls div.navigate-up.enabled,
+.mongodb.reveal .controls div.navigate-up.enabled:hover {
+  border-bottom-color: #5fa832;
+}
+
+.mongodb.reveal .controls div.navigate-down, .reveal .controls div.navigate-down.enabled,
+.mongodb.reveal .controls div.navigate-down.enabled:hover {
+  border-top-color: #5fa832;
+}
+
+.mongodb.reveal .progress span {
+  background: #5fa832;
+}
+
+.mongodb.reveal .slide-number {
+  color: #5fa832;
+}
+
+.mongodb.reveal p {
+  margin: 0;
+}

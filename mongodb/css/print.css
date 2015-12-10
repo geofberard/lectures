@@ -1,0 +1,18 @@
+.reveal {
+  color: black !important;
+}
+
+.reveal h1,
+.reveal h2,
+.reveal h3,
+.reveal h4,
+.reveal h5,
+.reveal h6 {
+  color: black !important;
+}
+
+.print-with-background {
+  background-color: #4b321f !important;
+  border-radius: 15px !important;
+  padding: 15px !important;
+}

@@ -1,0 +1,22 @@
+{
+  "name": "lectures",
+  "version": "1.0.0",
+  "authors": [
+    "benbaix <geoffrey.berard@gmail.com>"
+  ],
+  "description": "Conférences et présentations",
+  "main": "index.html",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "reveal.js": "~3.1.0",
+    "highlightjs": "9.0.0"
+  }
+}
