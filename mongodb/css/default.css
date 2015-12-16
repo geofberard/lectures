@@ -144,3 +144,7 @@ h1.mongonotes {
 .mongodb.reveal p {
   margin: 0;
 }
+
+ol li strong {
+  color: #5fa832;
+}

@@ -1183,6 +1183,622 @@ $ git checkout step-final
                     </section>
                 </section>
 
+                <section>
+                    <h1><img src="./images/mongodb_logo.png" alt="MongoDB Logo" class="print-with-background"></h1>
+                    <h2>Replication</h2>
+                </section>
+
+                <section>
+                    <section><h2>MongoDB Replication</h2>
+
+                        <div class="olist arabic">
+                            <ol class="arabic">
+                                <li><p><strong>MongoDB write path</strong></p></li>
+                                <li><p>Replication principles</p></li>
+                                <li><p>Replica set Read and Write Semantics</p></li>
+                                <li><p>Replica set in practice</p></li>
+                            </ol>
+                        </div>
+                    </section>
+                    <section><h2>MongoDB write path</h2>
+
+                        <div class="imageblock" style="float: center">
+                            <div class="content"><img src="images/journaling.png" alt="journaling" height="400px"></div>
+                        </div>
+                        <aside class="notes">
+                            <div class="ulist">
+                                <ul>
+                                    <li><p>Journaling active by default</p></li>
+                                    <li><p>low level log of an operation for crash recovery</p></li>
+                                </ul>
+                            </div>
+                        </aside>
+                    </section>
+                    <section><h2>MongoDB Journal vs Oplog</h2>
+
+                        <div class="ulist">
+                            <ul>
+                                <li><p><strong>journal</strong></p>
+
+                                    <div class="ulist">
+                                        <ul>
+                                            <li><p>low level log of an operation for crash recovery (can be turned off)</p></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li><p><strong>oplog</strong></p>
+
+                                    <div class="ulist">
+                                        <ul>
+                                            <li><p>similar to RDBMS binlog</p>
+
+                                                <div class="ulist">
+                                                    <ul>
+                                                        <li><p>stores (idemopotent) high-level transactions that modify the database</p></li>
+                                                        <li><p>kept on the master and used for replication</p></li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="paragraph"><p><a href="https://docs.mongodb.org/manual/core/read-isolation-consistency-recency/" class="bare">https://docs.mongodb.org/manual/core/read-isolation-consistency-recency/</a>
+                        </p></div>
+                        <aside class="notes">
+                            <div class="paragraph"><p>Oplog stores high-level transactions that modify the database (queries are not stored for example), like insert this document, update that, etc. Oplog is kept
+                                on the master and slaves will periodically poll the master to get newly performed operations (since the last poll). Operations sometimes get transformed before being stored in the
+                                oplog so that they are idempotent (and can be safely applied many times).</p></div>
+                            <div class="paragraph"><p>Journal on the other hand can be switched on/off on any node (master or slave), and is a low-level log of an operation for the purpose of crash recovery and
+                                durability of a single mongo instance. You can read low-level op like 'write these bytes to this file at this position'.</p></div>
+                        </aside>
+                    </section>
+                </section>
+                <section>
+                    <section><h2>MongoDB Replication</h2>
+
+                        <div class="olist arabic">
+                            <ol class="arabic">
+                                <li><p>MongoDB write path</p></li>
+                                <li><p><strong>Replication principles</strong></p></li>
+                                <li><p>Replica set Read and Write Semantics</p></li>
+                                <li><p>Replica set in practice</p></li>
+                            </ol>
+                        </div>
+                    </section>
+                    <section><h2>Replica set</h2>
+
+                        <div class="ulist">
+                            <ul>
+                                <li><p><strong>Replica set</strong> = a group of <em>mongod processes</em> that provide <strong>redundancy</strong> and <strong>high availability</strong></p></li>
+                                <li><p>Writes: write to single node replicated to the others members of the replica set</p></li>
+                                <li><p>Read: read from a single member of the replica set</p></li>
+                            </ul>
+                        </div>
+                        <div class="paragraph"><p>Disclaimer:</p></div>
+                        <div class="ulist">
+                            <ul>
+                                <li><p>we only consider replica sets <strong>without sharding</strong> (for now)</p></li>
+                                <li><p>we not include proposed MongoDB 3.2 replication modifications (readConcern…​)</p></li>
+                            </ul>
+                        </div>
+                        <aside class="notes">
+                            <div class="ulist">
+                                <ul>
+                                    <li><p>usually associated with sharding but we must not confond the two.</p></li>
+                                    <li><p>all that we’ll discuss here applies</p></li>
+                                    <li><p>sharding complexify more the architecture and we will treat it a part</p></li>
+                                </ul>
+                            </div>
+                        </aside>
+                    </section>
+                    <section><h2>Replica set members</h2>
+
+                        <div class="ulist">
+                            <ul>
+                                <li><p><strong>Primary</strong></p>
+
+                                    <div class="ulist">
+                                        <ul>
+                                            <li><p>acceptes all <strong>writes</strong> and reads</p></li>
+                                            <li><p>1 primary per replica set</p></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li><p><strong>Secondaries</strong> replicates data (and can serve <strong>reads</strong> ⇒ reads preferences)</p>
+
+                                    <div class="ulist">
+                                        <ul>
+                                            <li><p>Priority 0 ⇒ Hidden members ⇒ Delayed</p></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li><p><strong>Arbiters</strong> (usually at most one) : break ties</p></li>
+                            </ul>
+                        </div>
+                        <aside class="notes">
+                            <div class="ulist">
+                                <ul>
+                                    <li><p>Mongo 3.0 max 50 members in a replica set, at most 7 voting (2.6 max 12 members)</p></li>
+                                    <li><p>priority ⇒ nb of votes</p></li>
+                                </ul>
+                            </div>
+                        </aside>
+                    </section>
+                    <section><h2>Primary and secondary members</h2>
+
+                        <div class="ulist">
+                            <ul>
+                                <li><p><strong>Primary</strong> acceptes all <strong>writes</strong> + reads + records them in oplog</p></li>
+                                <li><p><strong>Secondary</strong> replicates primary oplogs (also accept reads)</p></li>
+                            </ul>
+                        </div>
+                        <div class="imageblock" style="float: center">
+                            <div class="content"><img src="images/replica-set-read-write-operations-primary.png" class="framed-picture" alt="replica set read write operations primary" height="400px"></div>
+                        </div>
+                    </section>
+                    <section><h2>Replication data flow</h2>
+
+                        <div class="ulist">
+                            <ul>
+                                <li><p>asynchronous <strong>oplog</strong> replication</p></li>
+                                <li><p>heartbeat for monitoring status</p></li>
+                            </ul>
+                        </div>
+                        <div class="imageblock" style="float: center">
+                            <div class="content"><img src="images/replica-set-primary-with-two-secondaries.png" class="framed-picture" alt="replica set primary with two secondaries"></div>
+                        </div>
+                        <aside class="notes">
+                            <div class="ulist">
+                                <ul>
+                                    <li><p>very similar to binlog replication in RDBMS)</p></li>
+                                </ul>
+                            </div>
+                        </aside>
+                    </section>
+                    <section><h2>Automatic failover via new primary election</h2>
+
+                        <div class="imageblock" style="float: center">
+                            <div class="content"><img src="images/replica-set-trigger-election.png" class="framed-picture" alt="replica set trigger election"></div>
+                        </div>
+                    </section>
+                    <section><h2>Strategy for election</h2>
+
+                        <div class="ulist">
+                            <ul>
+                                <li><p><strong>member’s priority</strong></p></li>
+                                <li><p><strong>latest optime in the oplog</strong></p></li>
+                                <li><p>uptime</p></li>
+                                <li><p>break the tie rules</p></li>
+                            </ul>
+                        </div>
+                    </section>
+                    <section><h2>Secondary members: Priority 0</h2>
+
+                        <div class="ulist">
+                            <ul>
+                                <li><p>cannot become primary</p></li>
+                                <li><p>cannot trigger elections</p></li>
+                                <li><p>can vote in elections</p></li>
+                                <li><p>copy of data + accepts reads</p></li>
+                            </ul>
+                        </div>
+                        <div class="imageblock" style="float: center">
+                            <div class="content"><img src="images/replica-set-three-members-geographically-distributed.png" class="framed-picture" alt="replica set three members geographically distributed"></div>
+                        </div>
+                        <aside class="notes">
+                            <div class="ulist">
+                                <ul>
+                                    <li><p>Typical use cases:</p>
+
+                                        <div class="ulist">
+                                            <ul>
+                                                <li><p>data center separation: I want my primary to always be bound to a particular datacenter</p></li>
+                                                <li><p>standby member to replace a failed server</p></li>
+                                                <li><p>different hardware/workload profile</p></li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </aside>
+                    </section>
+                    <section><h2>Secondary members: Hidden replica set member</h2>
+
+                        <div class="ulist">
+                            <ul>
+                                <li><p>Priority 0 members that don’t accept reads</p></li>
+                            </ul>
+                        </div>
+                        <div class="imageblock" style="float: center">
+                            <div class="content"><img src="images/replica-set-hidden-member.png" class="framed-picture" alt="replica set hidden member"></div>
+                        </div>
+                        <aside class="notes">
+                            <div class="ulist">
+                                <ul>
+                                    <li><p>Typical use cases:</p>
+
+                                        <div class="ulist">
+                                            <ul>
+                                                <li><p>dedicated task as reporting or replication</p></li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </aside>
+                    </section>
+                    <section><h2>Secondary members: Delayed replica set members</h2>
+
+                        <div class="ulist">
+                            <ul>
+                                <li><p>reflect an delayed state of the set</p>
+
+                                    <div class="ulist">
+                                        <ul>
+                                            <li><p><strong>must be priority 0</strong> ⇒ prevent them to become primary</p></li>
+                                            <li><p><strong>should be hidden</strong> ⇒ prevent application to query stale data</p></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="imageblock" style="float: center">
+                            <div class="content"><img src="images/replica-set-delayed-member.png" class="framed-picture" alt="replica set delayed member"></div>
+                        </div>
+                        <aside class="notes">
+                            <div class="ulist">
+                                <ul>
+                                    <li><p>Typical use cases:</p>
+
+                                        <div class="ulist">
+                                            <ul>
+                                                <li><p>rolling backups or recovery from human error</p></li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </aside>
+                    </section>
+                    <section><h2>Elections on odd number of nodes</h2>
+
+                        <div class="ulist">
+                            <ul>
+                                <li><p>a replica cannot become primary with only 1 vote</p></li>
+                                <li><p>majority with even numbers of members ?</p></li>
+                            </ul>
+                        </div>
+                        <div class="imageblock" style="float: center">
+                            <div class="content"><img src="images/replica-set-trigger-election.png" class="framed-picture" alt="replica set trigger election"></div>
+                        </div>
+                        <div class="ulist">
+                            <ul>
+                                <li class="fragment" data-fragment-index="0"><p>use <strong>Arbitrers</strong> to break ties</p>
+
+                                    <div class="ulist">
+                                        <ul>
+                                            <li><p>does not hold data</p></li>
+                                            <li><p>cannot became a primary</p></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </section>
+                    <section><h2>Arbiters</h2>
+
+                        <div class="imageblock" style="float: center">
+                            <div class="content"><img src="images/replica-set-four-members-add-arbiter.png" class="framed-picture" alt="replica set four members add arbiter"></div>
+                        </div>
+                    </section>
+                    <section><h2>Fault tolerance</h2>
+
+                        <div class="ulist">
+                            <ul>
+                                <li><p><strong>No primary</strong> ⇒ writes no longer possible, reads still accepted</p></li>
+                                <li><p><strong>Fault tolerance</strong> : number of members that can become unavailable and still be able to elect a primary</p></li>
+                            </ul>
+                        </div>
+                        <div class="imageblock" style="">
+                            <div class="content"><img src="images/diag-8ae163d66e82fd1d5439fbb4362e07bf.png" alt="diag 8ae163d66e82fd1d5439fbb4362e07bf"></div>
+                        </div>
+                        <div class="listingblock">
+                            <div class="content">
+                                <pre class="highlight"><code class="sql language-sql hljs">https://docs.mongodb.org/manual/core/replica-<span class="hljs-operator"><span class="hljs-keyword">set</span>-architectures/</span></code></pre>
+                            </div>
+                        </div>
+                    </section>
+                    <section><h2>Rollbacks during replica set failover</h2>
+
+                        <div class="ulist">
+                            <ul>
+                                <li><p>a rollback reverts write operations on a former primary when the member rejoins its replica set after a failover</p>
+
+                                    <div class="ulist">
+                                        <ul>
+                                            <li><p>the primary accepted a write that was not sucessfuly replicated to secondaries !</p></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="paragraph"><p>Cause of the problem ?</p></div>
+                        <div class="paragraph"><p><strong>default write semantics</strong> <strong>{ w:1 }</strong> ⇒ the primary acknowledge the write after the local write (local Journal!)</p></div>
+                    </section>
+                    <section><h2>How to handle rollbacks</h2>
+
+                        <div class="ulist">
+                            <ul>
+                                <li><p>manually apply/discard rollbacks ( <strong>rollback/</strong> folder)</p></li>
+                                <li><p><em>avoid</em> rollbacks use <strong>{ w:majority }</strong></p>
+
+                                    <div class="ulist">
+                                        <ul>
+                                            <li><p>READ UNCOMMITED SEMANTICS</p>
+
+                                                <div class="ulist">
+                                                    <ul>
+                                                        <li><p>! Regardless of write concern, other clients can see the result of the write operations before the write operation is acknowledged to the issuing
+                                                            client.</p></li>
+                                                        <li><p>! Clients can read data which may be subsequently rolled back.</p></li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="paragraph"><p><a href="https://docs.mongodb.org/manual/core/replica-set-rollbacks/" class="bare">https://docs.mongodb.org/manual/core/replica-set-rollbacks/</a></p></div>
+                        <div class="paragraph"><p><a href="https://docs.mongodb.org/manual/core/read-isolation-consistency-recency/" class="bare">https://docs.mongodb.org/manual/core/read-isolation-consistency-recency/</a>
+                        </p></div>
+                    </section>
+                </section>
+                <section>
+                    <section><h2>MongoDB Replication</h2>
+
+                        <div class="olist arabic">
+                            <ol class="arabic">
+                                <li><p>MongoDB write path</p></li>
+                                <li><p>Replication principles</p></li>
+                                <li><p><strong>Replica set Read and Write Semantics</strong></p>
+
+                                    <div class="olist loweralpha">
+                                        <ol class="loweralpha" type="a">
+                                            <li><p>Write concerns</p></li>
+                                            <li><p>Read preferences</p></li>
+                                        </ol>
+                                    </div>
+                                </li>
+                                <li><p>Replica set in practice</p></li>
+                            </ol>
+                        </div>
+                    </section>
+                    <section><h2>Replica set Read and Write Semantics</h2>
+
+                        <div class="ulist">
+                            <ul>
+                                <li><p>parameters that change the default read/write semantics (<strong>move</strong> the <em>CAP cursor</em>)</p>
+
+                                    <div class="ulist">
+                                        <ul>
+                                            <li><p><strong>write concern</strong></p>
+
+                                                <div class="ulist">
+                                                    <ul>
+                                                        <li><p>is the guarantee an application requires from MongoDB to consider a write operation successful</p></li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                            <li><p><strong>read preference</strong></p>
+
+                                                <div class="ulist">
+                                                    <ul>
+                                                        <li><p>applications specify read preference to control how drivers <strong>direct read operations</strong> to members of the replica set</p></li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </section>
+                    <section><h2>Write semantics</h2>
+
+                        <div class="ulist">
+                            <ul>
+                                <li><p><strong>w:1</strong> (<em>default</em>)</p>
+
+                                    <div class="ulist">
+                                        <ul>
+                                            <li><p>the primary acknowledge the write after the local write</p></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li><p>other options:</p>
+
+                                    <div class="ulist">
+                                        <ul>
+                                            <li><p><strong>w:N</strong></p>
+
+                                                <div class="ulist">
+                                                    <ul>
+                                                        <li><p>ack the write after the ack of N members</p></li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                            <li><p><strong>x:majority</strong></p>
+
+                                                <div class="ulist">
+                                                    <ul>
+                                                        <li><p>ack the write after the ack of the majority of the members</p></li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li><p>optional parameter <strong>wtimeout</strong></p>
+
+                                    <div class="ulist">
+                                        <ul>
+                                            <li><p>prevents write operations from blocking indefinitely if the write concern is unachievable</p></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </section>
+                    <section><h2>W:2 write semantics</h2>
+
+                        <div class="imageblock" style="float: center">
+                            <div class="content"><img src="images/crud-write-concern-w2.png" class="framed-picture" alt="crud write concern w2"></div>
+                        </div>
+                    </section>
+                    <section><h2>Changing the write semantics</h2>
+
+                        <div class="ulist">
+                            <ul>
+                                <li><p>at the query level</p></li>
+                            </ul>
+                        </div>
+                        <div class="listingblock">
+                            <div class="content"><pre class="highlight"><code class="js language-js hljs javascript">db.products.insert(
+                                { item: <span class="hljs-string">"envelopes"</span>, qty : <span class="hljs-number">100</span>, type: <span class="hljs-string">"Clasp"</span> },
+                                { writeConcern: { w: <span class="hljs-number">2</span>, wtimeout: <span class="hljs-number">5000</span> } }
+                                )</code></pre>
+                            </div>
+                        </div>
+                        <div class="ulist">
+                            <ul>
+                                <li><p>change the default write concern:</p></li>
+                            </ul>
+                        </div>
+                        <div class="listingblock">
+                            <div class="content"><pre class="highlight"><code class="js language-js hljs javascript">cfg = rs.conf()
+                                cfg.settings = {}
+                                cfg.settings.getLastErrorDefaults = { w: <span class="hljs-string">"majority"</span>, wtimeout: <span class="hljs-number">5000</span> }
+                                rs.reconfig(cfg)</code></pre>
+                            </div>
+                        </div>
+                    </section>
+                    <section><h2>Read preference</h2>
+
+                        <div class="ulist">
+                            <ul>
+                                <li><p><strong>primary</strong> (<em>default</em>)</p>
+
+                                    <div class="ulist">
+                                        <ul>
+                                            <li><p>read from the current replica set primary.</p></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li><p><strong>primaryPreferred</strong></p>
+
+                                    <div class="ulist">
+                                        <ul>
+                                            <li><p>read from primary (or secondary iff no primary)</p></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li><p><strong>secondary</strong></p>
+
+                                    <div class="ulist">
+                                        <ul>
+                                            <li><p>read from secondary members</p></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li><p><strong>secondaryPreferred</strong></p>
+
+                                    <div class="ulist">
+                                        <ul>
+                                            <li><p>read from secondary(or primary iff no primary)</p></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li><p><strong>nearest</strong></p>
+
+                                    <div class="ulist">
+                                        <ul>
+                                            <li><p>read from the member with the least network latency</p></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="paragraph"><p><strong>Async replication ⇒ stale data if read from replica</strong></p></div>
+                    </section>
+                    <section><h2>Read preferences example</h2>
+
+                        <div class="imageblock" style="float: center">
+                            <div class="content"><img src="images/replica-set-read-preference.png" class="framed-picture" alt="replica set read preference"></div>
+                        </div>
+                    </section>
+                    <section><h2>Read preferences use cases</h2>
+
+                        <div class="ulist">
+                            <ul>
+                                <li><p><strong>Maximize Consistency</strong> ⇒ <strong>primary</strong> read preference</p></li>
+                                <li><p><strong>Maximize Availability</strong> ⇒ <strong>primaryPreferred</strong> read preference</p></li>
+                                <li><p><strong>Minimize Latency</strong> ⇒ <strong>nearest</strong> read preference</p></li>
+                            </ul>
+                        </div>
+                    </section>
+                </section>
+                <section>
+                    <section><h2>MongoDB Replication</h2>
+
+                        <div class="olist arabic">
+                            <ol class="arabic">
+                                <li><p>MongoDB write path</p></li>
+                                <li><p>Replication principles</p></li>
+                                <li><p>Replica set Read and Write Semantics</p></li>
+                                <li><p><strong>Replica set in practice</strong></p></li>
+                            </ol>
+                        </div>
+                    </section>
+                    <section><h2>MongoDB consistency in real world</h2>
+
+                        <div class="quoteblock">
+                            <blockquote>Read the documentation for the systems you depend on thoroughly–then verify their claims for yourself. You may discover surprising results!</blockquote>
+                            <div class="attribution">— Kyle Kingsbury(Aphyr)</div>
+                        </div>
+                        <div class="paragraph"><p><a href="https://aphyr.com/posts/322-jepsen-mongodb-stale-reads" class="bare">https://aphyr.com/posts/322-jepsen-mongodb-stale-reads</a></p></div>
+                    </section>
+                    <section><h2>Learn more:</h2>
+
+                        <div class="ulist">
+                            <ul>
+                                <li><p>read the MongoDB documentation and the Jespen blog entry:</p>
+
+                                    <div class="ulist">
+                                        <ul>
+                                            <li><p><a href="https://docs.mongodb.org/manual/replication/">MongoDB Documentation</a></p></li>
+                                            <li><p><a href="https://aphyr.com/posts/322-jepsen-mongodb-stale-reads">Jepsen MongoDB Stale reads on</a></p></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li><p>do the replica set tutorial in the MongoDB documentation:</p>
+
+                                    <div class="ulist">
+                                        <ul>
+                                            <li><p><a href="https://docs.mongodb.org/manual/administration/replica-set-deployment/" class="bare">https://docs.mongodb.org/manual/administration/replica-set-deployment/</a>
+                                            </p></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </section>
+                </section>
+
+
+
                 <!--     Bibliography    -->
 
                 <section>
