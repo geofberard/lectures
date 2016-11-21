@@ -132,8 +132,7 @@
     surname: 'Hugo', 
     groups : [ "Writer", "Painter"],
     address:{
-        number: 6,
-        street_name: 'Place des Vosges', 
+        street: '6 Place des Vosges',
         city: 'Paris', 
         zip: '75004'
     }
@@ -484,6 +483,15 @@ $ ./mongoimport --db test --collection zips --file ../../../Downloads/zips.json
                         <pre><code data-trim contenteditable class="json mongo-capture">
 { "_id" : ObjectId("54853dd6dd8fc0fec931fcbc"), "first_name" : "John", "last_name" : "Doe" }
                         </code></pre>
+                        <p>Returning only the first element:</p>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+> db.member.findOne()
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h1>READ</h1>
+                        <h2>Find</h2>
                         <p>Formating the result:</p>
                         <pre><code data-trim contenteditable class="json mongo-capture">
 > db.member.find().pretty()
@@ -494,10 +502,6 @@ $ ./mongoimport --db test --collection zips --file ../../../Downloads/zips.json
     "first_name" : "John",
     "last_name" : "Doe"
 }
-                        </code></pre>
-                        <p>Returning only the first element:</p>
-                        <pre><code data-trim contenteditable class="json mongo-capture">
-> db.member.findOne()
                         </code></pre>
                     </section>
 
@@ -526,25 +530,32 @@ find({query},{keys_filter})
                         <h2>Querying :</h2>
                         <ul>
                             <li>Greater than ($gt, $gte)</li>
-                        <pre><code data-trim contenteditable class="json mongo-capture">
+                            <pre><code data-trim contenteditable class="json mongo-capture">
 { pop : {$gt : 100000} }
-                        </code></pre>
+                            </code></pre>
                             <li>Lower than ($lt, $lte)</li>
-                        <pre><code data-trim contenteditable class="json mongo-capture">
+                            <pre><code data-trim contenteditable class="json mongo-capture">
 { pop : {$lte : 100} }
-                        </code></pre>
-                            <li>Value Exists ($exists)</li>
-                        <pre><code data-trim contenteditable class="json mongo-capture">
-{ city : {$exists : true} }
-                        </code></pre>
-                            <li>Value Type ($type) (<a href="http://docs.mongodb.org/manual/reference/bson-types/index.html">Type codes</a>)</li>
-                        <pre><code data-trim contenteditable class="json mongo-capture">
-{ city : {$type : type_code} }
-                        </code></pre>
+                            </code></pre>
                             <li>Regular Expression ($regex)</li>
                         <pre><code data-trim contenteditable class="json mongo-capture">
 { city : {$regex : "^A"} }
                         </code></pre>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h1>READ</h1>
+                        <h2>Querying :</h2>
+                        <ul>
+                            <li>Value Exists ($exists)</li>
+                            <pre><code data-trim contenteditable class="json mongo-capture">
+{ city : {$exists : true} }
+                            </code></pre>
+                            <li>Value Type ($type) (<a href="http://docs.mongodb.org/manual/reference/bson-types/index.html">Type codes</a>)</li>
+                            <pre><code data-trim contenteditable class="json mongo-capture">
+{ city : {$type : type_code} }
+                            </code></pre>
                         </ul>
                     </section>
 
