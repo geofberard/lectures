@@ -571,7 +571,7 @@ find({query},{keys_filter})
 
                     <section>
                         <h1>READ</h1>
-                        <h2>Querying :</h2>
+                        <h2>Querying</h2>
                         <ul>
                             <li>Value Exists ($exists)</li>
                             <pre><code data-trim contenteditable class="json mongo-capture">
@@ -582,6 +582,19 @@ find({query},{keys_filter})
 { city : {$type : type_code} }
                             </code></pre>
                         </ul>
+                    </section>
+
+                    <section>
+                        <h1>READ</h1>
+                        <h2>Wrong Query</h2>
+                        <p>Overriding query property</p>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+{ pop: {$gt: 10000}, pop: {$lt: 50000}}
+                        </code></pre>
+                        <p>is equivalent to</p>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+{ pop: {$lt: 50000}}
+                        </code></pre>
                     </section>
 
                     <section>
