@@ -99,27 +99,31 @@
                             <li>Made in C++</li>
                             <li>Scalable : Auto Sharding</li>
                             <li>Dynamic : Schemaless</li>
-                            <li>Functionnalities
-                                <ul>
-                                    <li>Text Search</li>
-                                    <li>GeoSearch</li>
-                                    <li>Aggregation</li>
-                                    <li>Map-Reduce</li>
-                                </ul>
-                            </li>
+                            <li>No transactions</li>
                         </ul>
                     </section>
 
                     <section>
                         <h1>MongoDb</h1>
-                          <h2>Supported By</h2>
+                        <h2>Functionnalities</h2>
+                        <ul>
+                            <li>Text Search</li>
+                            <li>GeoSearch</li>
+                            <li>Aggregation</li>
+                            <li>Map-Reduce</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h1>MongoDb</h1>
+                          <h2>Supported languages</h2>
                         <img src="./images/mongodb_driver.png" alt="Drivers" style="width:500px" class="framed-picture">
                     </section>
                 </section>
 
                 <section>
                     <section>
-                        <h1>Schemaless</h1>
+                        <h1>Document</h1>
                         <h2>JSon</h2>
                         <pre><code data-trim contenteditable class="json mongo-capture">
 {
@@ -135,7 +139,12 @@
     }
 }
                         </code></pre>
-                        <div>Available Data Types : </div> 
+                    </section>
+
+                    <section>
+                        <h1>Document</h1>
+                        <h2>JSon</h2>
+                        <div>Available Data Types : </div>
                         <ul>
                             <li>Array</li>
                             <li>Object</li>
@@ -151,18 +160,16 @@
                         <h2>Exemple</h2>
                         <pre><code data-trim contenteditable class="json mongo-capture">
 {
-    first_name: 'Hannibal', 
+    first_name: 'Hannibal',
     surname: 'Smith', 
-}
-
+},
 {
     first_name: 'Gregory',
     surname: 'House',
     title:"Dr",
-}
-
+},
 {
-    first_name: 'Victor', 
+    first_name: 'Victor',
     surname: 'Hugo', 
     address:{
         number: 6,
@@ -173,6 +180,7 @@
 }
                         </code></pre>
                     </section>
+
                 </section>
 
                 <section>
@@ -1003,6 +1011,80 @@ WriteResult({ "nMatched" : 5, "nUpserted" : 0, "nModified" : 5 })
                 <section>
                     <h1><img src="./images/mongodb_logo.png" alt="MongoDB Logo" class="print-with-background"></h1>
                     <h2>Practical</h2>
+                </section>
+
+                <section>
+                    <section>
+                        <h1>Installing MongoDB</h1>
+                        <h2>Linux & MacOS</h2>
+                        <ul style="font-size:18px">
+                            <li>Download mongodb zip <a href="https://www.mongodb.com/download-center#community" target="blank">here</a></li>
+                            <li>Unzip and go in the file</li>
+                            <pre><code data-trim contenteditable class="json mongo-capture">
+$ cd path_to_downloaded_file
+$ tar xvf mongodb-osx-ssl-x86_64-3.2.11.tgz
+                            </code></pre>
+                            <li>Create the storage directory </li>
+                            <pre><code data-trim contenteditable class="json mongo-capture">
+$ sudo mkdir -p /data/db
+$ sudo chmod 777 /data/db
+                            </code></pre>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h1>Running MongoDB</h1>
+                        <h2>Linux & MacOS</h2>
+                        <ul style="font-size:18px">
+                            <li>Go to the directory</li>
+                            <pre><code data-trim contenteditable class="json mongo-capture">
+$ cd mongodb-osx-x86_64-3.2.11/bin
+                            </code></pre>
+                            <li>Run MongoDB Daemon (server)</li>
+                            <pre><code data-trim contenteditable class="json mongo-capture">
+$ ./mongod
+                            </code></pre>
+                            <li>Run MongoShell (client) in an other shell</li>
+                            <pre><code data-trim contenteditable class="json mongo-capture">
+$ ./mongo
+                            </code></pre>
+                        </ul>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h1>Installing MongoDB</h1>
+                        <h2>Windows</h2>
+                        <ul style="font-size:18px">
+                            <li>Download mongodb zip <a href="https://www.mongodb.com/download-center#community" target="blank">here</a></li>
+                            <li>Install it</li>
+                            <li>Create the storage directory </li>
+                            <pre><code data-trim contenteditable class="json mongo-capture">
+$ mkdir \data
+$ mkdir \data\db
+                            </code></pre>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h1>Running MongoDB</h1>
+                        <h2>Windows</h2>
+                        <ul style="font-size:18px">
+                            <li>Go to the directory</li>
+                            <pre><code data-trim contenteditable class="json mongo-capture">
+$ cd "\Program Files\MongoDB 3.2 Standard\bin"
+                            </code></pre>
+                            <li>Run MongoDB Daemon (server)</li>
+                            <pre><code data-trim contenteditable class="json mongo-capture">
+$ mongod.exe
+                            </code></pre>
+                            <li>Run MongoShell (client) in an other cmd</li>
+                            <pre><code data-trim contenteditable class="json mongo-capture">
+$ mongo.exe
+                            </code></pre>
+                        </ul>
+                    </section>
                 </section>
 
                 <section>

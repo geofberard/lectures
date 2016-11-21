@@ -1,16 +1,16 @@
 MongoDB - Lecture Notes
 
 I. MongoDB Presentation
+	Pas de transactions mais modification atomique d'un document
+	Un dictionaire python est proche d'un object JSON.
 	Positionnement
 		->Extrèmement scalable mais peu de fonctionnalité
-		Key/Value
-		Column orientend
+			Key/Value
+			Column orientend
 		->Beaucoup de fonctionalité mais peu scalable 
-		Relational Data Base Management System
+			Relational Data Base Management System
 		=>Mongo a pour vocation d'être entre les 2
 		Most regular SQL features 90% of requests
-
-
 
 II. MongoDB Architecture
 	Replica Set
@@ -51,7 +51,8 @@ II. MongoDB Architecture
 
 
 III. MongoDB CRUD
-                        <a href="http://media.mongodb.org/zips.json?_ga=1.209556562.1112717993.1415550243">or here</a>
+	MongoDB has no query language, instead it uses methors of object (slide ?)
+	$ use test -> go in a special database
     Read
         for (i=0;i<100;i++){ names=["exam","essay","quizz"]; for (j=0;j<3;j++){db.score.insert({student : i, type : names[j],score : Math.round(Math.random()*100)})}}
         	$lt $gt work on string as well but "B" < "BA"
@@ -76,4 +77,7 @@ http://media.mongodb.org/zips.json
 
 
 V. Practical
+	To know if a windows is on 32bits:
+	wmic os get osarchitecture
+	32 bits -> 2Gb storage max
 
