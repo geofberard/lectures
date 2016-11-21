@@ -979,19 +979,54 @@ WriteResult({ "nMatched" : 5, "nUpserted" : 0, "nModified" : 5 })
                 </section>
 
                 <section>
-                    <h1>ADVANCED</h1>
-                    <h2>Geospacial (<a href="http://docs.mongodb.org/manual/reference/operator/query-geospatial/index.html">details</a>)</h2>
-                    <pre><code data-trim contenteditable class="json mongo-capture">
+                    <section>
+                        <h1>ADVANCED</h1>
+                        <h2>Distinct (<a href="https://docs.mongodb.com/v3.2/reference/method/db.collection.distinct/" target="_blank">details</a>)</h2>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+> db.zips.distinct({field} , {search_query})
+                        </code></pre>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+> db.zips.distinct("state" , {})
+[
+	"MA",
+	"RI",
+	"NH",
+    ...
+]
+                        </code></pre>
+                    </section>
+                    
+                    <section>
+                        <h1>ADVANCED</h1>
+                        <h2>Geospacial (<a href="http://docs.mongodb.org/manual/reference/operator/query-geospatial/index.html" target="_blank">details</a>)</h2>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
 > db.zips.createIndex( { loc : "2d" } )
 > db.zips.find( { 'loc': {$near : [ -112.416728, 37.781334 ] } } ).limit(5)
-                    </code></pre>
-                    <pre><code data-trim contenteditable class="json mongo-capture">
+                        </code></pre>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
 { "_id" : "84759", "city" : "PANGUITCH", "loc" : [ -112.436886, 37.80777 ], "pop" : 1797, "state" : "UT" }
 { "_id" : "84710", "city" : "ALTON", "loc" : [ -112.548389, 37.469905 ], "pop" : 159, "state" : "UT" }
 { "_id" : "84760", "city" : "PARAGONAH", "loc" : [ -112.773972, 37.89172 ], "pop" : 334, "state" : "UT" }
 { "_id" : "84717", "city" : "BRYCE CANYON", "loc" : [ -112.074311, 37.608427 ], "pop" : 958, "state" : "UT" }
 { "_id" : "84761", "city" : "PAROWAN", "loc" : [ -112.832251, 37.844861 ], "pop" : 1988, "state" : "UT" }
-                    </code></pre>
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h1>ADVANCED</h1>
+                        <h2>Aggregate (<a href="https://docs.mongodb.com/v3.2/aggregation/" target="_blank">details</a>)</h2>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+> db.zips.aggregate([{ $group: {group} } , { $match: {group} }])
+                        </code></pre>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+> db.zips.aggregate([{ $group: { _id: "$city", totalPop: { $sum: "$pop" } } }])
+{ "_id" : "CHALKYITSIK", "totalPop" : 99 }
+{ "_id" : "WRANGELL", "totalPop" : 2573 }
+{ "_id" : "SKAGWAY", "totalPop" : 692 }
+{ "_id" : "THORNE BAY", "totalPop" : 744 }
+...
+                        </code></pre>
+                    </section>
                 </section>
 
                 <!--     IV. Software with MongoDB    -->
