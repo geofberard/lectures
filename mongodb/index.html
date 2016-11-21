@@ -128,12 +128,12 @@
                         <pre><code data-trim contenteditable class="json mongo-capture">
 {
     _id : 1,
-    first_name: 'Victor', 
-    surname: 'Hugo', 
+    first_name: 'Victor',
+    surname: 'Hugo',
     groups : [ "Writer", "Painter"],
     address:{
         street: '6 Place des Vosges',
-        city: 'Paris', 
+        city: 'Paris',
         zip: '75004'
     }
 }
@@ -199,7 +199,8 @@
                     <section>
                         <h1>BSON</h1>
                         <h2>Enriched Types</h2>
-                           <img src="./images/bson_types.png" alt="MongoDB Logo">
+                        <p><img src="./images/bson_types.png" alt="MongoDB Logo"></p>
+                        <p><a href="http://bsonspec.org/" target="_blank">bsonspec.org</a></p>
                     </section>
                 </section>
 
@@ -424,6 +425,30 @@
                 <section>
                     <h1><img src="./images/mongodb_logo.png" alt="MongoDB Logo" class="print-with-background"></h1>
                     <h2>CRUD</h2>
+                </section>
+
+                <section>
+                    <section>
+                        <h1>Querying</h1>
+                        <h2><s>Query language</s> => methods of objects</h2>
+                    </section>
+
+                    <section>
+                        <h1>Identifier</h1>
+                        <h2><s>Query language</s> => methods of objects</h2>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+{
+    _id : 1,
+    first_name: 'Victor',
+    surname: 'Hugo',
+    groups : [ "Writer", "Painter"],
+}
+                        </code></pre>
+                        <ul>
+                            <li>Unique</li>
+                            <li>Can't be changed</li>
+                        </ul>
+                    </section>
                 </section>
 
                 <section>
@@ -1029,7 +1054,7 @@ WriteResult({ "nMatched" : 5, "nUpserted" : 0, "nModified" : 5 })
                         <h1>Installing MongoDB</h1>
                         <h2>Linux & MacOS</h2>
                         <ul style="font-size:18px">
-                            <li>Download mongodb zip <a href="https://www.mongodb.com/download-center#community" target="blank">here</a></li>
+                            <li>Download mongodb zip <a href="https://www.mongodb.com/download-center#community" target="_blank">here</a></li>
                             <li>Unzip and go in the file</li>
                             <pre><code data-trim contenteditable class="json mongo-capture">
 $ cd path_to_downloaded_file
@@ -1068,7 +1093,7 @@ $ ./mongo
                         <h1>Installing MongoDB</h1>
                         <h2>Windows</h2>
                         <ul style="font-size:18px">
-                            <li>Download mongodb zip <a href="https://www.mongodb.com/download-center#community" target="blank">here</a></li>
+                            <li>Download mongodb zip <a href="https://www.mongodb.com/download-center#community" target="_blank">here</a></li>
                             <li>Install it</li>
                             <li>Create the storage directory </li>
                             <pre><code data-trim contenteditable class="json mongo-capture">
