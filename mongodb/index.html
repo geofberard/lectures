@@ -756,32 +756,6 @@ find({query},{keys_filter})
                         </code></pre>
                     </section>
 
-                    <section>
-                        <h1>READ</h1>
-                        <h2>Execution detail :</h2>
-                        <pre><code data-trim contenteditable class="json mongo-capture">
-> cur = db.zips.find({state:"MA"},{city:true, _id:false}).sort({city : -1}).limit(5)
-> cur.explain()
-                        </code></pre>
-                        <pre><code data-trim contenteditable class="json mongo-capture">
-{
-    ...
-    "cursor" : "QueryOptimizerCursor",
-    "n" : 5,
-    "nscannedObjects" : 29353,
-    "nscanned" : 29353,
-    "nscannedObjectsAllPlans" : 29353,
-    "nscannedAllPlans" : 29353,
-    "scanAndOrder" : false,
-    "nYields" : 229,
-    "nChunkSkips" : 0,
-    "millis" : 22,
-    "server" : "127.0.0.1:27017",
-    "filterSet" : false
-    ...
-} 
-                        </code></pre>
-                    </section>
                 </section>
 
                 <section>
@@ -927,11 +901,81 @@ WriteResult({ "nMatched" : 5, "nUpserted" : 0, "nModified" : 5 })
                 </section>
 
                 <section>
-                    <h1>DEBUGGING</h1>
-                    <h2>Result of the last operation</h2>
+                    <h1>Indexes</h1>
+                    <h2>Creating an index</h2>
                     <pre><code data-trim contenteditable class="json mongo-capture">
-> db.runCommand({getLastError:1})
+> db.member.createIndex( { name: 1 } )
                     </code></pre>
+                    <pre><code data-trim contenteditable class="json mongo-capture">
+{
+  "createdCollectionAutomatically" : false,
+  "numIndexesBefore" : 1,
+  "numIndexesAfter" : 2,
+  "ok" : 1
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <section>
+                        <h1>DEBUGGING</h1>
+                        <h2>Command detail</h2>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+> cur = db.zips.find({state:"MA"},{city:true, _id:false}).sort({city : -1}).limit(5); null;
+> cur.explain()
+                        </code></pre>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+{
+    ...
+    "cursor" : "QueryOptimizerCursor",
+    "n" : 5,
+    "nscannedObjects" : 29353,
+    "nscanned" : 29353,
+    "nscannedObjectsAllPlans" : 29353,
+    "nscannedAllPlans" : 29353,
+    "scanAndOrder" : false,
+    "nYields" : 229,
+    "nChunkSkips" : 0,
+    "millis" : 22,
+    "server" : "127.0.0.1:27017",
+    "filterSet" : false
+    ...
+}
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h1>DEBUGGING</h1>
+                        <h2>Execution detail</h2>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+> cur = db.zips.find({state:"MA"},{city:true, _id:false}).sort({city : -1}).limit(5); null;
+> curcur.explain("executionStats")
+                        </code></pre>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+{
+	"queryPlanner" : {
+        ...
+		"namespace" : "test.zips",
+		...
+	},
+	"executionStats" : {
+		"executionSuccess" : true,
+		"nReturned" : 5,
+		"executionTimeMillis" : 20,
+		"totalKeysExamined" : 0,
+		"totalDocsExamined" : 29353,
+        ...
+	},
+	"serverInfo" : {
+		"host" : "it-gbe",
+		"port" : 27017,
+		"version" : "3.2.11",
+		"gitVersion" : "009580ad490190ba33d1c6253ebd8d91808923e4"
+	},
+	"ok" : 1
+}
+                        </code></pre>
+                    </section>
                 </section>
 
                 <section>

@@ -58,6 +58,7 @@ III. MongoDB CRUD
         	$lt $gt work on string as well but "B" < "BA"
         	If we filter on $lt : "A" line with a non string value (it is possible as it is schemeless) won't be returned 
         No transaction are made on cursor until we try to get the result.
+        Select only the matching type of param of param $gt: "A" won't return integer value
 
     Cursor
         Are prosessed in order in the client
@@ -80,4 +81,8 @@ V. Practical
 	To know if a windows is on 32bits:
 	wmic os get osarchitecture
 	32 bits -> 2Gb storage max
+	Mongo shell js 
+	-> a["b"] == a.b
+	-> cmd help
+	"null;" after a find avoid displayer, therefore applaying request. Without it, the returned cursor will contains the datas after the one that have been displayed as a result of the command.
 
