@@ -995,7 +995,7 @@ WriteResult({ "nMatched" : 5, "nUpserted" : 0, "nModified" : 5 })
 ]
                         </code></pre>
                     </section>
-                    
+
                     <section>
                         <h1>ADVANCED</h1>
                         <h2>Geospacial (<a href="http://docs.mongodb.org/manual/reference/operator/query-geospatial/index.html" target="_blank">details</a>)</h2>
@@ -1218,36 +1218,40 @@ $ mongo.exe
                 <section>
                     <section>
                         <h1>Mongo Shell</h1>
-                        <h2>Phase 1.1</h2>
+                        <h2>Emails</h2>
                         <ul style="font-size:18px">
-                            <li>Import the <a href="./data-set/enron.json">enron.json</a> in the collection "emails" <span style="color:#5ca831">[Shell command]</span></li>
-                            <li>What is the total amount of emails ? <span style="color:#5ca831">[Query + Result]</span></li>
-                            <li>What is the amount of emails sent from domain enron.com ? <span style="color:#5ca831">[Query + Result]</span></li>
-                            <li>List the reply emails (starting with "Re:") <span style="color:#5ca831">[Query]</span></li>
-                            <li>How long took the last request <span style="color:#5ca831">[Request + Time]</span></li>
+                            <li>I.1) Import the <a href="./data-set/enron.json">enron.json</a> in the collection "emails" <span style="color:#5ca831">[Shell command]</span></li>
+                            <li>I.2) What is the total amount of emails ? <span style="color:#5ca831">[Query + Result]</span></li>
+                            <li>I.3) What is the amount of emails sent by addresses in domain enron.com ? <span style="color:#5ca831">[Query + Result]</span></li>
+                            <li>I.4) List the forwarded emails (subject starting by “FW:”) <span style="color:#5ca831">[Query]</span></li>
+                            <li>I.5) How long took the last request <span style="color:#5ca831">[Request + Time]</span></li>
                         </ul>
                     </section>
 
                     <section>
                         <h1>Mongo Shell</h1>
-                        <h2>Phase 1.2</h2>
+                        <h2>Emails</h2>
                         <ul style="font-size:18px">
-                            <li>Index the right field and compute the request again <span style="color:#5ca831">[Index Query + Time]</span></li>
-                            <li>Find dates, sender and subject of all messages sent to rob.bradley@enron.com <span style="color:#5ca831">[Query]</span></li>
-                            <li>Remove lizard_ar@yahoo.com from all the email recipient <span style="color:#5ca831">[Query]</span></li>
-                            <li>Add rob.bradley@enron.com as recipient to all emails sent by rosalee.fleming@enron.com <span style="color:#5ca831">[Query]</span></li>
+                            <li>I.6) Add an index the right field to make the last request run faster <span style="color:#5ca831">[Index Query]</span></li>
+                            <li>I.7) How long took the last request with the index <span style="color:#5ca831">[Time]</span></li>
+                            <li>I.8) Find only dates, sender and subject of all messages sent to rosalee.fleming@enron.com <span style="color:#5ca831">[Query]</span></li>
+                            <li>I.9) Remove lizard_ar@yahoo.com from all the email recipient <span style="color:#5ca831">[Query]</span></li>
+                            <li>I.10) Add rob.bradley@enron.com as recipient to all emails sent by rosalee.fleming@enron.com <span style="color:#5ca831">[Query]</span></li>
                         </ul>
                     </section>
 
                     <section>
                         <h1>Mongo Shell</h1>
-                        <h2>Phase 2</h2>
+                        <h2>ZIP Codes</h2>
                         <ul style="font-size:18px">
-                            <li>List the 10 most populated cities in California and Louisiana <span style="color:#5ca831">[Query]</span></li>
-                            <li>Then most populated cities in California and Louisiana ranked 10 to 20 <span style="color:#5ca831">[Query]</span></li>
-                            <li>Add a field country with the value USA to all the documents <span style="color:#5ca831">[Query]</span></li>
-                            <li>List names of all cities with more than 100 000 inhabitant located on the west side of meridian -110, sorted by population. <span style="color:#5ca831">[Query]</span></li>
-                            <li>The city near New York with the biggest population <span style="color:#5ca831">[Query + Answer]</span></li>
+                            <li>Import the <a href="./data-set/zips.json">zips.json</a> in the collection "zips" <span style="color:#5ca831">[Shell command]</span></li>
+                            <li>II.1. List the 10 most populated zones in California and Louisiana <span style="color:#5ca831">[Query]</span></li>
+                            <li>II.2. Then most populated zones in California and Louisiana ranked 10 to 20 <span style="color:#5ca831">[Query]</span></li>
+                            <li>II.3. Add a field country with the value USA to all the zips <span style="color:#5ca831">[Query]</span></li>
+                            <li>II.4. List all zones with more than 100 000 inhabitant located on the west side of meridian 110. <span style="color:#5ca831">[Query]</span></li>
+                            <li>II.5. What is the closest zones to coordonates -73.996705, 40.74838 <span style="color:#5ca831">[Query + Answer]</span></li>
+                            <li>II.6. The cities that are less than 5km away from -73.996705, 40.74838: <span style="color:#5ca831">[Query + Answer]</span></li>
+                            <li>II.7. The cities that have more than 500 000 inhabitants. <span style="color:#5ca831">[Query + Answer]</span></li>
                         </ul>
                     </section>
                 </section>
