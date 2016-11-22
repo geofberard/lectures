@@ -435,7 +435,6 @@
 
                     <section>
                         <h1>Identifier</h1>
-                        <h2><s>Query language</s> => methods of objects</h2>
                         <pre><code data-trim contenteditable class="json mongo-capture">
 {
     _id : 1,
@@ -898,22 +897,6 @@ WriteResult({ "nMatched" : 5, "nUpserted" : 0, "nModified" : 5 })
 > db.member.drop()
                         </code></pre>
                     </ul>
-                </section>
-
-                <section>
-                    <h1>Indexes</h1>
-                    <h2>Creating an index</h2>
-                    <pre><code data-trim contenteditable class="json mongo-capture">
-> db.member.createIndex( { name: 1 } )
-                    </code></pre>
-                    <pre><code data-trim contenteditable class="json mongo-capture">
-{
-  "createdCollectionAutomatically" : false,
-  "numIndexesBefore" : 1,
-  "numIndexesAfter" : 2,
-  "ok" : 1
-}
-                    </code></pre>
                 </section>
 
                 <section>

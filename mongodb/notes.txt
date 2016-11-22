@@ -56,9 +56,9 @@ III. MongoDB CRUD
 	MongoDB has no query language, instead it uses methors of object
 	$ use test -> go in a special database
     Read
-        for (i=0;i<100;i++){ names=["exam","essay","quizz"]; for (j=0;j<3;j++){db.score.insert({student : i, type : names[j],score : Math.round(Math.random()*100)})}}
-        	$lt $gt work on string as well but "B" < "BA"
-        	If we filter on $lt : "A" line with a non string value (it is possible as it is schemeless) won't be returned 
+        for (i=0;i<60;i++){ names=["tp","projet"]; for (j=0;j<2;j++){db.score.insert({student : i, type : names[j],score : Math.round(Math.random()*10 + 8)})}}
+    	$lt $gt work on string as well but "B" < "BA"
+    	If we filter on $lt : "A" line with a non string value (it is possible as it is schemeless) won't be returned 
         No transaction are made on cursor until we try to get the result.
         Select only the matching type of param of param $gt: "A" won't return integer value
 
@@ -73,8 +73,8 @@ III. MongoDB CRUD
 
 
 IV. Software with MongoDB
-
-http://media.mongodb.org/zips.json
+	The reason we can read followers both ways is that it doesn't allows sharding
+	http://media.mongodb.org/zips.json
 
 
 
