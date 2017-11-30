@@ -1205,8 +1205,8 @@ $ mongo.exe
                         <ul style="font-size:18px">
                             <li>I.1) Import the <a href="./data-set/enron.json">enron.json</a> in the collection "emails" <span style="color:#5ca831">[Shell command]</span></li>
                             <li>I.2) What is the total amount of emails ? <span style="color:#5ca831">[Query + Result]</span></li>
-                            <li>I.3) What is the amount of emails sent by addresses in domain enron.com ? <span style="color:#5ca831">[Query + Result]</span></li>
-                            <li>I.4) List the forwarded emails (subject starting by “FW:”) <span style="color:#5ca831">[Query]</span></li>
+                            <li>I.3) What is the amount of emails in inbox ? <span style="color:#5ca831">[Query + Result]</span></li>
+                            <li>I.4) List the emails sent from domain yahoo.com <span style="color:#5ca831">[Query]</span></li>
                             <li>I.5) How long took the last request <span style="color:#5ca831">[Request + Time]</span></li>
                         </ul>
                     </section>
@@ -1217,8 +1217,8 @@ $ mongo.exe
                         <ul style="font-size:18px">
                             <li>I.6) Add an index the right field to make the last request run faster <span style="color:#5ca831">[Index Query]</span></li>
                             <li>I.7) How long took the last request with the index <span style="color:#5ca831">[Time]</span></li>
-                            <li>I.8) Find only dates, sender and subject of all messages sent to rosalee.fleming@enron.com <span style="color:#5ca831">[Query]</span></li>
-                            <li>I.9) Remove lizard_ar@yahoo.com from all the email recipient <span style="color:#5ca831">[Query]</span></li>
+                            <li>I.8) Find only dates and subjects of all messages sent by mike.mcconnell@enron.com <span style="color:#5ca831">[Query]</span></li>
+                            <li>I.9) Remove rosalee.fleming@enron.com from all the email recipient <span style="color:#5ca831">[Query]</span></li>
                             <li>I.10) Add rob.bradley@enron.com as recipient to all emails sent by rosalee.fleming@enron.com <span style="color:#5ca831">[Query]</span></li>
                         </ul>
                     </section>
