@@ -5,13 +5,13 @@
  * GLOBAL STYLES
  *********************************************/
 body {
-  background: #4b321f;
-  background: -moz-radial-gradient(center, circle cover, #5b3d29 0%, #4b321f 100%);
+  background: rgba(43,44,46,0.95);;
+  background: -moz-radial-gradient(center, circle cover, #5b3d29 0%, rgba(43,44,46,0.95) 100%);
   background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, #5b3d29), color-stop(100%, #4b321f));
-  background: -webkit-radial-gradient(center, circle cover, #5b3d29 0%, #4b321f 100%);
-  background: -o-radial-gradient(center, circle cover, #5b3d29 0%, #4b321f 100%);
-  background: -ms-radial-gradient(center, circle cover, #5b3d29 0%, #4b321f 100%);
-  background: radial-gradient(center, circle cover, #5b3d29 0%, #4b321f 100%);
+  background: -webkit-radial-gradient(center, circle cover, #5b3d29 0%, rgba(43,44,46,0.95) 100%);
+  background: -o-radial-gradient(center, circle cover, #5b3d29 0%, rgba(43,44,46,0.95) 100%);
+  background: -ms-radial-gradient(center, circle cover, #5b3d29 0%, rgba(43,44,46,0.95) 100%);
+  background: radial-gradient(center, circle cover, #5b3d29 0%, rgba(43,44,46,0.95) 100%);
   background-color: #2b2b2b; }
 
 .reveal {
@@ -68,7 +68,7 @@ body {
 .reveal .framed-picture{
   margin: 5px; 
   padding: 10px;
-  border-radius: 30px; 
+  border-radius: 10px; 
   background: rgba(255, 255, 255, 1);
   display: inline-block;
   vertical-align: middle;
@@ -91,7 +91,7 @@ body {
 .mongodb.reveal section img.framed-picture {
   margin: 5px;
   padding: 10px;
-  border-radius: 30px;
+  border-radius: 10px;
   background: rgba(255, 255, 255, 1);
   display: inline-block;
   vertical-align: middle;
