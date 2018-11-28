@@ -5,13 +5,13 @@
  * GLOBAL STYLES
  *********************************************/
 body {
-  background: rgba(43,44,46,0.95);;
-  background: -moz-radial-gradient(center, circle cover, #5b3d29 0%, rgba(43,44,46,0.95) 100%);
+  background: rgb(66, 73, 80);;
+  background: -moz-radial-gradient(center, circle cover, rgb(66, 73, 80) 0%, rgb(26,26,26) 100%);
   background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, #5b3d29), color-stop(100%, #4b321f));
-  background: -webkit-radial-gradient(center, circle cover, #5b3d29 0%, rgba(43,44,46,0.95) 100%);
-  background: -o-radial-gradient(center, circle cover, #5b3d29 0%, rgba(43,44,46,0.95) 100%);
-  background: -ms-radial-gradient(center, circle cover, #5b3d29 0%, rgba(43,44,46,0.95) 100%);
-  background: radial-gradient(center, circle cover, #5b3d29 0%, rgba(43,44,46,0.95) 100%);
+  background: -webkit-radial-gradient(center, circle cover, rgb(66, 73, 80) 0%, rgb(26,26,26) 100%);
+  background: -o-radial-gradient(center, circle cover, rgb(66, 73, 80) 0%, rgb(26,26,26) 100%);
+  background: -ms-radial-gradient(center, circle cover, rgb(66, 73, 80) 0%, rgb(26,26,26) 100%);
+  background: radial-gradient(center, circle cover, rgb(66, 73, 80) 0%, rgb(26,26,26) 100%);
   background-color: #2b2b2b; }
 
 .reveal {
