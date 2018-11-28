@@ -129,13 +129,13 @@
                         <pre><code data-trim contenteditable class="json mongo-capture">
 {
     _id : 1,
-    first_name: 'Victor',
-    surname: 'Hugo',
-    groups : [ "Writer", "Painter"],
+    first_name: 'Paul',
+    surname: 'McCartney',
+    instruments : ["Guitar", "Bass guitar", "Piano", ...],
     address:{
-        street: '6 Place des Vosges',
-        city: 'Paris',
-        zip: '75004'
+        street: '20 Forthlin Road',
+        city: 'LiverPool',
+        zip: 'United Kingdom'
     }
 }
                         </code></pre>
@@ -154,31 +154,132 @@
                             <li>Null</li>
                         </ul>
                     </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h1>Schemaless</h1>
+                        <h2>Exemple RDBMS - Musiciens</h2>
+                        <table>
+                            <thead>
+                                <th><span style="color:#5ca831">first_name</span></th>
+                                <th style="border-left: 1px solid white"><span style="color:#5ca831">last_name</span></th>
+                                <th style="border-left: 1px solid white"><span style="color:#5ca831">birthday</span></th>
+                            </thead>
+
+                            <tr>
+                                <td>Louis</td>
+                                <td style="border-left: 1px solid white">Armstrong</td>
+                                <td style="border-left: 1px solid white">4 août 1901</td>
+                            </tr>
+                        </table>
+                    </section>
 
                     <section>
                         <h1>Schemaless</h1>
-                        <h2>Exemple</h2>
+                        <h2>Exemple RDBMS - Alter table</h2>
+                        <table>
+                            <thead>
+                                <th><span style="color:#5ca831">first_name</span></th>
+                                <th style="border-left: 1px solid white"><span style="color:#5ca831">last_name</span></th>
+                                <th style="border-left: 1px solid white"><span style="color:#5ca831">title</span></th>
+                                <th style="border-left: 1px solid white"><span style="color:#5ca831">birthday</span></th>
+                            </thead>
+
+                            <tr>
+                                <td>Louis</td>
+                                <td style="border-left: 1px solid white">Armstrong</td>
+                                <td style="border-left: 1px solid white"></td>
+                                <td style="border-left: 1px solid white">4 août 1901</td>
+                            </tr>
+                            <tr>
+                                <td>Paul</td>
+                                <td style="border-left: 1px solid white">McCartney</td>
+                                <td style="border-left: 1px solid white">Sir</td>
+                                <td style="border-left: 1px solid white">18 June 1942</td>
+                            </tr>
+                        </table>
+                    </section>
+
+                    <section>
+                        <h1>Schemaless</h1>
+                        <h2>Exemple RDBMS - Holed Table</h2>
+                        <table>
+                            <thead>
+                            <th><span style="color:#5ca831">first_name</span></th>
+                            <th style="border-left: 1px solid white"><span style="color:#5ca831">last_name</span></th>
+                            <th style="border-left: 1px solid white"><span style="color:#5ca831">title</span></th>
+                            <th style="border-left: 1px solid white"><span style="color:#5ca831">nickname</span></th>
+                            <th style="border-left: 1px solid white"><span style="color:#5ca831">birthday</span></th>
+                            </thead>
+
+                            <tr>
+                                <td>Louis</td>
+                                <td style="border-left: 1px solid white">Armstrong</td>
+                                <td style="border-left: 1px solid white"></td>
+                                <td style="border-left: 1px solid white"></td>
+                                <td style="border-left: 1px solid white">04/08/1901</td>
+                            </tr>
+                            <tr>
+                                <td>Paul</td>
+                                <td style="border-left: 1px solid white">McCartney</td>
+                                <td style="border-left: 1px solid white">Sir</td>
+                                <td style="border-left: 1px solid white"></td>
+                                <td style="border-left: 1px solid white">18/06/1942</td>
+                            </tr>
+                            <tr>
+                                <td>Gordon Matthew Thomas</td>
+                                <td style="border-left: 1px solid white">Sumner</td>
+                                <td style="border-left: 1px solid white"></td>
+                                <td style="border-left: 1px solid white">Sting</td>
+                                <td style="border-left: 1px solid white">02/10/1951</td>
+                            </tr>
+                        </table>
+                    </section>
+
+                    <section>
+                        <h1>Schemaless</h1>
+                        <h2>Exemple - MongoDB</h2>
                         <pre><code data-trim contenteditable class="json mongo-capture">
 {
-    first_name: 'Hannibal',
-    surname: 'Smith', 
+    first_name: 'Louis',
+    surname: 'Armstrong',
+    birthday: '4 août 1901',
 },
 {
-    first_name: 'Gregory',
-    surname: 'House',
-    title:"Dr",
+    first_name: 'Paul',
+    surname: 'McCartney',
+    title: 'Sir',
+    birthday: '18 June 1942',
 },
 {
-    first_name: 'Victor',
-    surname: 'Hugo', 
-    address:{
-        number: 6,
-        street_name: 'Place des Vosges', 
-        city: 'Paris', 
-        zip: '75004'
-    }
-}
+    first_name: 'Gordon Matthew Thomas',
+    surname: 'Sumner',
+    nickname: 'Sting',
+    birthday: '2 octobre 1951',
+},
                         </code></pre>
+                    </section>
+
+                    <section>
+                        <h1>Schemaless</h1>
+                        <h2>Be Carefull</h2>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+{
+    first_name: 'Louis',
+    surname: 'Armstrong',
+    birthday: '4 août 1901',
+},
+{
+    first_name: 42,
+},
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h1>Schemaless</h1>
+                        <h2>Be Carefull</h2>
+                        <p><img src="./images/ben.gif" alt=""></p>
                     </section>
 
                 </section>
@@ -186,7 +287,7 @@
                 <section>
                     <section>
                         <h1>BSON</h1>
-                        <p>Binary Representation of JSON</p>
+                        <p>Binary Representation of JSON - 16MB Maximum</p>
                         <pre><code data-trim contenteditable class="json mongo-capture">
 {hello: "world"}
                         </code></pre>
@@ -229,16 +330,19 @@
                         <pre><code data-trim contenteditable class="json mongo-capture">
 { 
   first_name: ‘Paul’,
-  surname: ‘Mc Cartney’,
+  surname: ‘Miller’,
   city: ‘London’,
-  location: [45.123,47.232],
   cars: [ 
-    { model: ‘Bentley’,
+    {
+      model: ‘Bentley’,
       year: 1973,
-      value: 100000, … },
-    { model: ‘Rolls Royce’,
+      value: 100000
+    },
+    {
+      model: ‘Rolls Royce’,
       year: 1965,
-      value: 330000, … }
+      value: 330000
+    }
   }
 }
                     </code></pre>
@@ -776,6 +880,10 @@ find({query},{keys_filter})
                     <h1>READ</h1>
                     <h2>Count</h2>
                     <pre><code data-trim contenteditable class="json mongo-capture">
+> db.zips.count({find_query})
+                    </code></pre>
+                    <p>Or</p>
+                    <pre><code data-trim contenteditable class="json mongo-capture">
 > db.zips.count({state:"NY"})
                     </code></pre>
                 </section>
@@ -785,13 +893,13 @@ find({query},{keys_filter})
                         <h1>READ</h1>
                         <h2>Cursor</h2>
                         <pre><code data-trim contenteditable class="json mongo-capture">
-> cursor = db.zips.find({state:"MA"},{city:true, _id:false});  
+> cursor = db.zips.find({state:"MA"},{city:true, _id:false}); null;
                         </code></pre>
                         <p>Iterating over results :</p>
                         <pre><code data-trim contenteditable class="json mongo-capture">
-> cursor.hasNext()          //        > true
-> cursor.next()             //        > "AGAWAM"
-> cursor.next()             //        > "CUSHMAN"
+> cursor.hasNext()   // > true
+> cursor.next()      // > "AGAWAM"
+> cursor.next()      // > "CUSHMAN"
                         </code></pre>
                     </section>
 
@@ -799,9 +907,9 @@ find({query},{keys_filter})
                         <h1>READ</h1>
                         <h2>Operation on curser:</h2>
                         <pre><code data-trim contenteditable class="json mongo-capture">
-> cusror.sort({city : -1})           //      Sort in reverse alphabetical order     
-> cursor.limit(5)                    //      Limit the nomber of results to 5
-> cusror.skip(3)                     //      Skip 3 elements besore returning the result    
+> cusror.sort({city : -1})   // Sort in reverse alphabetical order
+> cursor.limit(5)            // Limit the nomber of results to 5
+> cusror.skip(3)             // Skip 3 elements besore returning the result
                         </code></pre>
                         <p>They can be combined</p>
                         <pre><code data-trim contenteditable class="json mongo-capture">
@@ -816,7 +924,7 @@ find({query},{keys_filter})
                         <h1>UPDATE</h1>
                         <h2>Syntax</h2>
                         <pre><code data-trim contenteditable class="json mongo-capture">
-update( {find_query} , {update_query} )
+update( {find_query} , {update_query}, {update_params} )
                         </code></pre>
                     </section>
 
@@ -956,27 +1064,41 @@ WriteResult({ "nMatched" : 5, "nUpserted" : 0, "nModified" : 5 })
                 <section>
                     <section>
                         <h1>DEBUGGING</h1>
-                        <h2>Command detail</h2>
                         <pre><code data-trim contenteditable class="json mongo-capture">
-> cur = db.zips.find({state:"MA"},{city:true, _id:false}).sort({city : -1}).limit(5); null;
+> db.zips.explain().find({query});
+                        </code></pre>
+                        <p>or</p>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+> cur = db.zips.find({query}); null;
 > cur.explain()
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h1>DEBUGGING</h1>
+                        <h2>Example</h2>
+                        <pre><code data-trim contenteditable class="json mongo-capture">
+> db.zips.explain().find({state:"MA"},{city:true, _id:false}).sort({city : -1}).limit(5);
                         </code></pre>
                         <pre><code data-trim contenteditable class="json mongo-capture">
 {
-    ...
-    "cursor" : "QueryOptimizerCursor",
-    "n" : 5,
-    "nscannedObjects" : 29353,
-    "nscanned" : 29353,
-    "nscannedObjectsAllPlans" : 29353,
-    "nscannedAllPlans" : 29353,
-    "scanAndOrder" : false,
-    "nYields" : 229,
-    "nChunkSkips" : 0,
-    "millis" : 22,
-    "server" : "127.0.0.1:27017",
-    "filterSet" : false
-    ...
+	"queryPlanner" : {
+		"plannerVersion" : 1,
+		"namespace" : "test.zips",
+		"indexFilterSet" : false,
+		"parsedQuery" : {
+			"state" : {
+				"$eq" : "MA"
+			}
+		},
+		"winningPlan" : ...,
+	"serverInfo" : {
+		"host" : "localhost",
+		"port" : 27017,
+		"version" : "4.0.4",
+		"gitVersion" : "f288a3bdf201007f3693c58e140056adf8b04839"
+	},
+	"ok" : 1
 }
                         </code></pre>
                     </section>
@@ -985,8 +1107,7 @@ WriteResult({ "nMatched" : 5, "nUpserted" : 0, "nModified" : 5 })
                         <h1>DEBUGGING</h1>
                         <h2>Execution detail</h2>
                         <pre><code data-trim contenteditable class="json mongo-capture">
-> cur = db.zips.find({state:"MA"},{city:true, _id:false}).sort({city : -1}).limit(5); null;
-> curcur.explain("executionStats")
+> cur = db.zips.explain("executionStats").find({state:"MA"},{city:true, _id:false}).sort({city : -1}).limit(5); null;
                         </code></pre>
                         <pre><code data-trim contenteditable class="json mongo-capture">
 {
@@ -1187,7 +1308,7 @@ WriteResult({ "nMatched" : 5, "nUpserted" : 0, "nModified" : 5 })
                             <li>Unzip and go in the file</li>
                             <pre><code data-trim contenteditable class="json mongo-capture">
 $ cd path_to_downloaded_file
-$ tar xvf mongodb-osx-ssl-x86_64-3.2.11.tgz
+$ tar xvf mongodb-osx-x86_64-4.0.4.tgz
                             </code></pre>
                             <li>Create the storage directory </li>
                             <pre><code data-trim contenteditable class="json mongo-capture">
@@ -1203,7 +1324,7 @@ $ sudo chmod 777 /data/db
                         <ul style="font-size:18px">
                             <li>Go to the directory</li>
                             <pre><code data-trim contenteditable class="json mongo-capture">
-$ cd mongodb-osx-x86_64-3.2.11/bin
+$ cd mongodb-osx-x86_64-4.0.4/bin
                             </code></pre>
                             <li>Run MongoDB Daemon (server)</li>
                             <pre><code data-trim contenteditable class="json mongo-capture">
@@ -1226,8 +1347,8 @@ $ ./mongo
                             <li>Install it</li>
                             <li>Create the storage directory </li>
                             <pre><code data-trim contenteditable class="json mongo-capture">
-$ mkdir \data
-$ mkdir \data\db
+$ cd C:\
+$ md "\data\db"
                             </code></pre>
                         </ul>
                     </section>
@@ -1238,11 +1359,11 @@ $ mkdir \data\db
                         <ul style="font-size:18px">
                             <li>Go to the directory</li>
                             <pre><code data-trim contenteditable class="json mongo-capture">
-$ cd "\Program Files\MongoDB 3.2 Standard\bin"
+$ cd "C:\Program Files\MongoDB\Server\4.0\bin\"
                             </code></pre>
                             <li>Run MongoDB Daemon (server)</li>
                             <pre><code data-trim contenteditable class="json mongo-capture">
-$ mongod.exe
+$ mongod.exe --dbpath="c:\data\db"
                             </code></pre>
                             <li>Run MongoShell (client) in an other cmd</li>
                             <pre><code data-trim contenteditable class="json mongo-capture">
