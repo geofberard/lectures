@@ -54,7 +54,7 @@ II. MongoDB Architecture
 
 III. MongoDB CRUD
 	MongoDB has no query language, instead it uses methors of object
-	-> similar to model sql api
+	-> similar to modern sql api
 	$ use test -> go in a special database
     Read
         for (i=0;i<60;i++){ names=["tp","projet"]; for (j=0;j<2;j++){db.score.insert({student : i, type : names[j],score : Math.round(Math.random()*10 + 8)})}}

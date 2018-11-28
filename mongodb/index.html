@@ -45,7 +45,7 @@
                       <h1><img src="./images/mongodb_logo.png" alt="MongoDB Logo" class="print-with-background"></h1>
                     <h2>The Humongous Database</h2>
                     <p><small>Geoffrey Berard / <a href="http://twitter.com/geofberard">@geofberard</a></small></p>
-                    <p><small><a href="http://goo.gl/lQe0pD">goo.gl/lQe0pD</a></small></p>
+                    <p><small><a href="http://goo.gl/lQe0pD">goo.gl/lQe0pD</a> - <a href="./MongoDB.pdf" target="_blank" >pdf</a></small></p>
                 </section>
 
                 <section>
@@ -964,15 +964,33 @@ update({surname : "Hugo"},
                             <pre><code data-trim contenteditable class="json mongo-capture">
 {$set : {groups : [ "Writer", "Painter"]}}
                             </code></pre>
-                            <pre><code data-trim contenteditable class="json mongo-capture">
-WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
-                            </code></pre>
                             <li>Supprimer des champs ($unset)</li>
                             <pre><code data-trim contenteditable class="json mongo-capture">
 {$unset : {groups : 1}}
                             </code></pre>
+                            <li>Modify Key ($unset)</li>
                             <pre><code data-trim contenteditable class="json mongo-capture">
-WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+{$rename : {"oldName" : "newName"}}
+                            </code></pre>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h1>UPDATE</h1>
+                        <ul>
+                            <li>Modify (number)</li>
+                            <pre><code data-trim contenteditable class="json mongo-capture">
+{$inc : {count : 1}}
+                            </code></pre>
+                            <pre><code data-trim contenteditable class="json mongo-capture">
+{$mul : {price : NumberDecimal("0.5")}}
+                            </code></pre>
+                            <li>Compare to current value (number, date)</li>
+                            <pre><code data-trim contenteditable class="json mongo-capture">
+{$min : {bestPrice : 150}}
+                            </code></pre>
+                            <pre><code data-trim contenteditable class="json mongo-capture">
+{$max : {highScore : 1275000}}
                             </code></pre>
                         </ul>
                     </section>
