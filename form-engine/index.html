@@ -1,0 +1,179 @@
+<!doctype html>
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>ReactFormEngine</title>
+
+        <meta name="description" content="MongoDB Lecture">
+        <meta name="author" content="Geoffrey Berard">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="../bower_components/reveal.js/css/reveal.css">
+        <link rel="stylesheet" href="../bower_components/reveal.js/css/theme/simple.css" id="theme">
+        <link rel="stylesheet" href="../bower_components/highlightjs/styles/hybrid.css">
+        <link rel="stylesheet" href="css/default.css">
+
+        <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+        <script>
+            if( window.location.search.match( /print-pdf/gi ) ) {
+                var link = document.createElement( 'link' );
+                link.rel = 'stylesheet';
+                link.type = 'text/css';
+                link.href = '../bower_components/reveal.js/css/print/pdf.css';
+                document.getElementsByTagName( 'head' )[0].appendChild( link );
+            }
+        </script>
+
+    </head>
+
+    <body>
+
+        <div class="mongodb reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+
+                <section>
+                      <h1><img width="300" src="./images/logo.png" style="background-color: white; border-radius: 20px; padding: 20px"/></h1>
+                    <h2>React Form Engine</h2>
+                    <p><small>Geoffrey Berard / <a href="http://twitter.com/geofberard">@geofberard</a></small></p>
+                    <p><small>geoffrey.berard@gmail.com</small></p>
+                    <p><small><a href="https://github.com/lesfurets/react-form-engine">https://github.com/lesfurets/react-form-engine</a></small></p>
+                </section>
+
+                <!--     I. Formulaire    -->
+
+                <section>
+                    <h1><img width="100%" src="./images/Contexte.png"/></h1>
+                </section>
+
+                <section>
+
+                    <section>
+                        <img src="./images/Form1.png"/>
+                    </section>
+
+                    <section>
+                        <img src="./images/Form2.png"/>
+                    </section>
+
+                    <section>
+                        <img src="./images/Form3.png"/>
+                    </section>
+
+                    <section>
+                        <img src="./images/Form4.png"/>
+                    </section>
+
+                    <section>
+                        <img src="./images/Form5.png"/>
+                    </section>
+
+                </section>
+
+                <section>
+                    <h1><img width="100%" src="./images/Gwt.png"/></h1>
+                </section>
+
+                <section>
+                    <img src="https://media.giphy.com/media/9Y5BbDSkSTiY8/source.gif"/>
+                </section>
+
+                <section>
+                    <h1><img width="100%" src="./images/React.png"/></h1>
+                </section>
+
+                <section>
+                    <img src="https://media.giphy.com/media/XbxZ41fWLeRECPsGIJ/source.gif"/>
+                </section>
+
+                <section>
+                    <h1><img width="100%" src="./images/Demo.png"/></h1>
+                </section>
+
+                <section>
+                    <pre><code data-trim contenteditable class="json mongo-capture">
+{
+    id:"MY_FORM",
+    blocks:[
+        {
+            id:"USER",
+            label:"My first block",
+            fields:[
+                {
+                    id:"NAME",
+                    label: "What is your name ?",
+                    type: FieldTypes.INPUT_TEXT,
+                },
+                ...
+            ],
+        },
+        ...
+    ],
+};
+                    </code></pre>
+                </section>
+
+                <section>
+
+                    <section>
+                        <img src="./images/Schema1.png"/>
+                    </section>
+
+                    <section>
+                        <img src="./images/Schema2.png"/>
+                    </section>
+
+                    <section>
+                        <img src="./images/Schema3.png"/>
+                    </section>
+
+                    <section>
+                        <img src="./images/Schema4.png"/>
+                    </section>
+
+                    <section>
+                        <img src="./images/Schema5.png"/>
+                    </section>
+
+                    <section>
+                        <img src="./images/Schema6.png"/>
+                    </section>
+
+                </section>
+
+                <section>
+                    <h1><img width="100%" src="./images/Questions.png"/></h1>
+                </section>
+
+            </div>
+
+
+        </div>
+
+        <script src="../bower_components/reveal.js/js/reveal.js"></script>
+        <script src="../bower_components/highlightjs/highlight.pack.js"></script>
+        <script>
+            hljs.initHighlightingOnLoad();
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                history: true,
+                center: true,
+                slideNumber: true,
+                maxScale: 1,
+                minScale: 1,
+                theme: Reveal.getQueryHash().theme,
+                transition: Reveal.getQueryHash().transition || 'default',
+            });
+        </script>
+
+    </body>
+</html>
