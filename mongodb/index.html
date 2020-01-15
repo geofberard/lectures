@@ -1323,6 +1323,7 @@ WriteResult({ "nMatched" : 5, "nUpserted" : 0, "nModified" : 5 })
                         <h1>Installing MongoDB</h1>
                         <h2>Linux & MacOS</h2>
                         <ul style="font-size:18px">
+                            <li>Documentation  <a href="https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x-tarball/" target="_blank">here</a></li>
                             <li>Download mongodb zip <a href="https://www.mongodb.com/download-center#community" target="_blank">here</a></li>
                             <li>Unzip and go in the file</li>
                             <pre><code data-trim contenteditable class="json mongo-capture">
@@ -1331,8 +1332,8 @@ $ tar xvf mongodb-osx-x86_64-4.0.4.tgz
                             </code></pre>
                             <li>Create the storage directory </li>
                             <pre><code data-trim contenteditable class="json mongo-capture">
-$ sudo mkdir -p /data/db
-$ sudo chmod 777 /data/db
+$ sudo mkdir -p /usr/local/var/mongodb
+$ sudo chmod 777 /usr/local/var/mongodb
                             </code></pre>
                         </ul>
                     </section>
@@ -1347,7 +1348,7 @@ $ cd mongodb-osx-x86_64-4.0.4/bin
                             </code></pre>
                             <li>Run MongoDB Daemon (server)</li>
                             <pre><code data-trim contenteditable class="json mongo-capture">
-$ ./mongod
+$ ./mongod --dbpath /usr/local/var/mongodb
                             </code></pre>
                             <li>Run MongoShell (client) in an other shell</li>
                             <pre><code data-trim contenteditable class="json mongo-capture">
@@ -1362,6 +1363,7 @@ $ ./mongo
                         <h1>Installing MongoDB</h1>
                         <h2>Windows</h2>
                         <ul style="font-size:18px">
+                            <li>Documentation  <a href="https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows-unattended/" target="_blank">here</a></li>
                             <li>Download mongodb zip <a href="https://www.mongodb.com/download-center#community" target="_blank">here</a></li>
                             <li>Install it</li>
                             <li>Create the storage directory </li>
@@ -1378,7 +1380,7 @@ $ md "\data\db"
                         <ul style="font-size:18px">
                             <li>Go to the directory</li>
                             <pre><code data-trim contenteditable class="json mongo-capture">
-$ cd "C:\Program Files\MongoDB\Server\4.0\bin\"
+$ cd "C:\Program Files\MongoDB\Server\4.2\bin\"
                             </code></pre>
                             <li>Run MongoDB Daemon (server)</li>
                             <pre><code data-trim contenteditable class="json mongo-capture">
